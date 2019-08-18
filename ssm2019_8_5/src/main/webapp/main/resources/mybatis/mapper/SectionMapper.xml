@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.SectionMapper">
+<resultMap type="com.henu.party.bean.Section" id="resultMapSectionMapper">
+<!--  
+//studySetion、video、sectionTime、grade
+//学习章节名、视频路径、本章总时间、本章总分数
+-->
+  	<id column="studySetion" property="studySetion"/>
+  	<result column="video" property="video"/>
+  	<result column="sectionTime" property="sectionTime"/>
+  	<result column="grade" property="grade"/>
+  </resultMap>
+<!--  
+//studySetion、video、sectionTime、grade
+//学习章节名、视频路径、本章总时间、本章总分数
+-->
+  	<insert id="insertSection" parameterType="com.henu.party.bean.Section"><!-- insert添加 -->
+ 	insert into tb_section(studySetion,video,sectionTime,grade) 
+ 	values (#{studySetion},#{video},#{sectionTime},#{grade})
+ 	</insert>
+ 	<select id="selectAllSection" resultType="com.henu.party.bean.Section">
+		select * from tb_section
+	</select>
+	<select id="selectByKeySection" resultType="com.henu.party.bean.Section" parameterType="java.lang.String">
+		select * from tb_section where studySetion = #{studySetion}
+	</select>
+	<delete id="batchDeleteByKeySection" parameterType="java.util.List">
+		delete from tb_section where studySetion in 
+		<foreach collection="Keys" item="i" open="("  separator="," close=")" >
+			#{i}
+		</foreach>
+	</delete>
+	<!-- 分页   暂时不用分页-->
+	<select id="searchRowSection" parameterType="java.lang.Integer" resultType="com.henu.party.bean.Section">
+		SELECT * from tb_section ORDER BY studySetion DESC LIMIT #{num1},#{num2}
+	</select>
+	<select id="numberSection"  resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM tb_section
+	</select>
+</mapper>

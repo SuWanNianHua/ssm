@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.henu.party.mapper.UserMapper">
+   		<!-- 根据userName查询某一用户基本信息 -->
+    	<select id="selectUserInfoByUsername" parameterType="java.lang.String" resultType="com.henu.party.bean.UserInfo">
+    		select * from tb_userInfo where userName=#{userName}
+    	</select>
+    	
+    	<!-- 根据userName查询某一用户学历学位 -->
+    	<select id="selectEduDegreeByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.EduDegree">
+    		select * from tb_eduDegree where userName=#{userName}
+    	</select>
+    	
+    	<!-- 根据userName查询某一用户工作岗位 -->
+    	<select id="selectJobStationByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.JobStation">
+    		select * from tb_jobStation where userName=#{userName}
+    	</select>
+    	
+    	<!-- 根据userName查询某一用户党政职务 -->
+    	<select id="selectPartyDutyByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.PartyDuty">
+    		select * from tb_partyDuty where userName=#{userName}
+    	</select>
+    	
+    	<!-- 根据userName查询某一用户技术职务 -->
+    	<select id="selectTechDutyByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.TechDuty">
+    		select * from tb_techDuty where userName=#{userName}
+    	</select>
+    	
+    	<!-- 根据userName查询某一用户奖惩信息 -->
+    	<select id="selectRewardPuByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.RewardPunish">
+    		select * from tb_rewardPunish where userName=#{userName}
+    	</select>
+    	
+    	<!-- 根据userName查询某一用户民主评议 -->
+    	<select id="selectDemoMeetByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.DemoMeet">
+    		select * from tb_demoMeet where userName=#{userName}
+    	</select>
+    	
+    	<!-- 根据userName查询某一用户流动党员 -->
+    	<select id="selectFlowParByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.FlowPartyer">
+    		select * from tb_flowPartyer where userName=#{userName}
+    	</select>
+    	
+    	<!-- 根据userName查询某一用户困难党员 -->
+    	<select id="selectPoorParByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.PoorPartyer">
+    		select * from tb_poorPartyer where userName=#{userName}
+    	</select>
+    	
+    	<!-- 根据userName查询某一用户出国出境 -->
+    	<select id="selectOutBoardByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.OutBoard">
+    		select * from tb_outBoard where userName=#{userName}
+    	</select>
+    	
+    	
+    </mapper>

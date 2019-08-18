@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.henu.party.mapper.ReadExcelMapper">
+    	<!-- 批量导入正式党员信息 -->
+   		<insert id="batchImportPartyMem1" parameterType="java.util.List">
+   			insert into tb_userInfo
+            (userName,password,name,sex,birthDay,nation,nativePlace,id,policeStation,startWork,otherParty,oPDate,
+ 				address,postalcode,phone,price,eduType,bestEdu,timeInSch,timeOutSch,degree,stationType,timeToWork,
+ 				stationName,newStatus,isWorker,partyInDate,partyType,positiveDates,positiveCase,enterDate,enterType,workPlace,partyState,partyBranch)
+	        values
+            <foreach collection ="list" item="userInfo" index= "index" separator =",">
+                (
+                #{userInfo.userName}, #{userInfo.password},#{userInfo.name},#{userInfo.sex},#{userInfo.birthDay},#{userInfo.nation},
+                #{userInfo.nativePlace},#{userInfo.id},#{userInfo.policeStation},#{userInfo.startWork},#{userInfo.otherParty},#{userInfo.oPDate},
+                #{userInfo.address},#{userInfo.postalcode},#{userInfo.phone},#{userInfo.price},#{userInfo.eduType},#{userInfo.bestEdu},
+                #{userInfo.timeInSch},#{userInfo.timeOutSch},#{userInfo.degree},#{userInfo.stationType},#{userInfo.timeToWork},#{userInfo.stationName},
+                #{userInfo.newStatus},#{userInfo.isWorker},#{userInfo.partyInDate},#{userInfo.partyType},#{userInfo.positiveDates},#{userInfo.positiveCase},
+                #{userInfo.enterDate},#{userInfo.enterType},#{userInfo.workPlace},#{userInfo.partyState},#{userInfo.partyBranch}
+                )
+            </foreach >
+   		</insert>
+   		
+   		<!-- 批量导入预备党员信息 -->
+   		<insert id="batchImportPartyMem2" parameterType="java.util.List">
+   			insert into tb_userInfo
+            (userName,password,name,sex,birthDay,nation,nativePlace,id,policeStation,startWork,otherParty,oPDate,
+ 				address,postalcode,phone,price,eduType,bestEdu,timeInSch,timeOutSch,degree,stationType,timeToWork,
+ 				stationName,newStatus,isWorker,partyInDate,partyType,enterDate,enterType,workPlace,partyState,partyBranch)
+	        values
+            <foreach collection ="list" item="userInfo" index= "index" separator =",">
+                (
+                #{userInfo.userName}, #{userInfo.password},#{userInfo.name},#{userInfo.sex},#{userInfo.birthDay},#{userInfo.nation},
+                #{userInfo.nativePlace},#{userInfo.id},#{userInfo.policeStation},#{userInfo.startWork},#{userInfo.otherParty},#{userInfo.oPDate},
+                #{userInfo.address},#{userInfo.postalcode},#{userInfo.phone},#{userInfo.price},#{userInfo.eduType},#{userInfo.bestEdu},
+                #{userInfo.timeInSch},#{userInfo.timeOutSch},#{userInfo.degree},#{userInfo.stationType},#{userInfo.timeToWork},#{userInfo.stationName},
+                #{userInfo.newStatus},#{userInfo.isWorker},#{userInfo.partyInDate},#{userInfo.partyType},
+                #{userInfo.enterDate},#{userInfo.enterType},#{userInfo.workPlace},#{userInfo.partyState},#{userInfo.partyBranch}
+                )
+            </foreach >
+   		</insert>
+   		
+   		<!-- 批量导入发展对象信息 -->
+   		<insert id="batchImportPartyMem3" parameterType="java.util.List">
+   			insert into tb_userInfo
+            (userName,password,name,sex,birthDay,nation,nativePlace,id,policeStation,startWork,otherParty,oPDate,
+ 				address,postalcode,phone,price,eduType,bestEdu,timeInSch,timeOutSch,degree,stationType,timeToWork,
+ 				stationName,newStatus,isWorker,applyDate,developPeople,activeDate,developDate,partyTrain,trainDate,trainResult,partyState,partyBranch)
+	        values
+            <foreach collection ="list" item="userInfo" index= "index" separator =",">
+                (
+                #{userInfo.userName}, #{userInfo.password},#{userInfo.name},#{userInfo.sex},#{userInfo.birthDay},#{userInfo.nation},
+                #{userInfo.nativePlace},#{userInfo.id},#{userInfo.policeStation},#{userInfo.startWork},#{userInfo.otherParty},#{userInfo.oPDate},
+                #{userInfo.address},#{userInfo.postalcode},#{userInfo.phone},#{userInfo.price},#{userInfo.eduType},#{userInfo.bestEdu},
+                #{userInfo.timeInSch},#{userInfo.timeOutSch},#{userInfo.degree},#{userInfo.stationType},#{userInfo.timeToWork},#{userInfo.stationName},
+                #{userInfo.newStatus},#{userInfo.isWorker},#{userInfo.applyDate},#{userInfo.developPeople},#{userInfo.activeDate},#{userInfo.developDate},
+                #{userInfo.partyTrain},#{userInfo.trainDate},#{userInfo.trainResult},#{userInfo.partyState},#{userInfo.partyBranch}
+                )
+            </foreach >
+   		</insert>
+   		
+   		<!-- 批量导入入党积极分子信息 -->
+   		<insert id="batchImportPartyMem4" parameterType="java.util.List">
+   			insert into tb_userInfo
+            (userName,password,name,sex,birthDay,nation,nativePlace,id,policeStation,startWork,otherParty,oPDate,
+ 				address,postalcode,phone,price,eduType,bestEdu,timeInSch,timeOutSch,degree,stationType,timeToWork,
+ 				stationName,newStatus,isWorker,applyDate,developPeople,activeDate,partyTrain,trainDate,trainResult,partyState,partyBranch)
+	        values
+            <foreach collection ="list" item="userInfo" index= "index" separator =",">
+                (
+                #{userInfo.userName}, #{userInfo.password},#{userInfo.name},#{userInfo.sex},#{userInfo.birthDay},#{userInfo.nation},
+                #{userInfo.nativePlace},#{userInfo.id},#{userInfo.policeStation},#{userInfo.startWork},#{userInfo.otherParty},#{userInfo.oPDate},
+                #{userInfo.address},#{userInfo.postalcode},#{userInfo.phone},#{userInfo.price},#{userInfo.eduType},#{userInfo.bestEdu},
+                #{userInfo.timeInSch},#{userInfo.timeOutSch},#{userInfo.degree},#{userInfo.stationType},#{userInfo.timeToWork},#{userInfo.stationName},
+                #{userInfo.newStatus},#{userInfo.isWorker},#{userInfo.applyDate},#{userInfo.developPeople},#{userInfo.activeDate},
+                #{userInfo.partyTrain},#{userInfo.trainDate},#{userInfo.trainResult},#{userInfo.partyState},#{userInfo.partyBranch}
+                )
+            </foreach >
+   		</insert>
+    	
+    </mapper>

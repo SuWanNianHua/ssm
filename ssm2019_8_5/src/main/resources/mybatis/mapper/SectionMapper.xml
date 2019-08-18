@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.SectionMapper">
+	<!-- 查询Section -->
+	<select id="selectSection" resultType="com.henu.party.bean.Section">
+		select * from tb_section
+	</select>
+
+	<!-- 通过name查询 -->
+	<select id="selectbyname" parameterType="String" resultType="com.henu.party.bean.Section">
+		select * from tb_section where studySetion like concat('%',#{studySetion},'%')
+	</select>
+
+	<!-- 插入section -->
+	<insert id="insertsection" parameterType="com.henu.party.bean.Section">
+		insert into tb_section
+		(studySetion,video,sectionTime,grade)
+		value
+		(#{studySetion},#{video},#{sectionTime},#{grade})
+	</insert>
+
+	<!--更新section-->
+	<update id="updatesection">
+		update tb_section set video=#{video},sectionTime=#{sectionTime},grade=#{grade} where studySetion=#{studySetion}
+	</update>
+
+	<!--删除section-->
+	<delete id="delsection" parameterType="com.henu.party.bean.Section">
+		delete from tb_section where studySetion=#{studySetion}
+	</delete>
+
+</mapper>

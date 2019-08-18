@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.ItemBankMapper">
+<resultMap type="com.henu.party.bean.ItemBank" id="resultMapItemBankMapper">
+<!--  
+//题号、题型、题干、选项A、选项B、选项C、选项D、答案
+//id、itemType、itemContent、optionA、optionB、optionC、optionD、answer
+-->
+  	<id column="id" property="id"/>
+  	<result column="itemType" property="itemType"/>
+  	<result column="itemContent" property="itemContent"/>
+  	<result column="optionA" property="optionA"/>
+  	<result column="optionB" property="optionB"/>
+  	<result column="optionC" property="optionC"/>
+  	<result column="optionD" property="optionD"/>
+  	<result column="answer" property="answer"/>
+  </resultMap>
+   <!--  
+	//题号、题型、题干、选项A、选项B、选项C、选项D、答案
+	//id、itemType、itemContent、optionA、optionB、optionC、optionD、answer
+	-->
+  	<insert id="insertItemBank" parameterType="com.henu.party.bean.ItemBank"><!-- insert添加 -->
+ 	insert into tb_itemBank(itemType,itemContent,optionA,optionB,optionC,optionD,answer) 
+ 	values (#{itemType},#{itemContent},#{optionA},#{optionB},#{optionC},#{optionD},#{answer})
+ 	</insert>
+ 	<select id="selectAllItemBank" resultType="com.henu.party.bean.ItemBank">
+		select * from tb_itemBank
+	</select>
+	<select id="selectByIdItemBank" resultType="com.henu.party.bean.ItemBank" parameterType="java.lang.Integer">
+		select * from tb_itemBank where id = #{id}
+	</select>
+	<delete id="batchDeleteByIdItemBank" parameterType="java.util.List">
+		delete from tb_itemBank where id in 
+		<foreach collection="ids" item="i" open="("  separator="," close=")" >
+			#{i}
+		</foreach>
+	</delete>
+	<!-- 分页 -->
+	<select id="searchRowItemBank" parameterType="java.lang.Integer" resultType="com.henu.party.bean.ItemBank">
+		SELECT * from tb_itemBank ORDER BY id DESC LIMIT #{num1},#{num2}
+	</select>
+	<select id="numberItemBank"  resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM tb_itemBank
+	</select>
+</mapper>

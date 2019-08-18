@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.henu.party.mapper.EduMapper">
+    
+    <!-- 查找全部专题 -->
+    <select id="selectAllThemes" parameterType="java.lang.Integer" resultType="com.henu.party.bean.ThemaicEdu">
+		select * from tb_specialEdu where 
+        			id >=(select id from tb_specialEdu order by id limit #{arg0},1)limit #{arg1}
+    </select>
+    
+    <!-- 查找专题文章 -->
+    <select id="selectThemeDetails"  resultType="com.henu.party.bean.EduDetail">
+		select * from tb_specialEduDetail
+    </select>
+    
+    <!-- 查找专题总记录数 -->
+    <select id="findAllCount" resultType="Integer">
+		select count(*) from tb_specialEdu 
+	</select>
+	
+	<!-- 插入专题 -->
+	<insert id="insertTheme" parameterType="com.henu.party.bean.ThemaicEdu">
+		insert into tb_specialEdu
+		(
+        		id,
+				title,
+				createDate,
+				content,
+				sepcialPic,
+				remark
+        		
+        )
+       	values(
+       			#{id},
+				#{title},
+				#{createDate},
+				#{content},
+				#{sepcialPic},
+				#{remark}
+       	)
+	</insert>
+	
+	<!-- 插入专题文章 -->
+	
+	<insert id="insertThemeDetail" parameterType="com.henu.party.bean.EduDetail">
+		insert into tb_specialEduDetail
+		(
+				id,
+				mainTitle,
+				title,
+				secTitle,
+				author,
+				`from`,
+				content,
+				newsPic,
+				clicked,
+				createDate,
+				createPeo,
+				extralFile,
+				remark
+		
+		
+		)values(
+				#{id},
+				#{mainTitle},
+				#{title},
+				#{secTitle},
+				#{author},
+				#{`from`},
+				#{content},
+				#{newsPic},
+				#{clicked},
+				#{createDate},
+				#{createPeo},
+				#{extralFile},
+				#{remark}
+		)
+	</insert>
+	<!-- 删除专题 -->
+	<delete id="deleteThemes" parameterType="ArrayList">
+        delete from tb_specialEdu  where id in
+		    <foreach collection="array" index="index" item="item"  open="(" separator="," close=")">
+				#{item}
+			</foreach> 
+	</delete>
+	
+	<!-- 删除专题文章 -->
+	<delete id="deleteThemeDetails" parameterType="ArrayList">
+        delete from tb_specialEduDetail  where id in
+		    <foreach collection="array" index="index" item="item"  open="(" separator="," close=")">
+				#{item}
+			</foreach> 
+	</delete>
+    </mapper>

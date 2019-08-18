@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>专题教育</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="/party/css/basic.css">
+	<script src="/party/layui/layui.js" charset="utf-8"></script>
+	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+	<link rel="stylesheet" href="/party/layui/css/layui.css" media="all">
+	<!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+
+<body>
+	<div style="width: 85%;margin: 0 auto">
+		<p style="display: inline-block; color: deepskyblue; font-size: 24px;">专题教育</p>
+		<div style="float: right;">
+			<button class="layui-btn" id="add">增加专题</button>
+			<button class="layui-btn">删除</button>
+		</div>
+		<table class="layui-hide" id="test"></table>
+	</div>
+
+</body>
+<div style="display: none;margin: 0 auto" id="add_option">
+		<form class="layui-form" style="text-align: ce">
+			<div class="layui-form-item" style="margin-top: 10px">
+				<div class="layui-inline">
+					<label class="layui-form-label">专题名</label>
+					<div class="layui-input-inline">
+						<input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-inline">
+						<input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+	
+			<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">创建日期</label>
+						<div class="layui-input-inline">
+							<input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item layui-form-text">
+						<label class="layui-form-label">专题内容</label>
+						<div class="layui-input-block">
+						  <textarea placeholder="请输入内容" class="layui-textarea" style="width: 515px;"></textarea>
+						</div>
+				</div>
+				<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+							<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						</div>
+				</div>
+		</form>
+	
+	</div>
+</html>
+<script>
+	layui.use(['table', 'layer', 'jquery', 'element', 'laydate', 'form'], function () {
+        var table = layui.table;
+        var layer = layui.layer;
+        var $ = layui.jquery;
+        var element = layui.element;
+        var laydate = layui.laydate;
+        var form = layui.form;
+
+		 $('#add').click(function () {
+            layer.open({
+                type:1,
+                title: '增加专题内容',
+                area: '800px',
+                btn:[],
+                content: $('#add_option'),
+            });
+            return false
+        })
+
+		//展示已知数据
+		table.render({
+			elem: '#test'
+				//,url:'/demo/table/user/'
+				,
+			cols: [
+				[ //标题栏
+					{
+						type: 'checkbox'
+					}, {
+						field: 'name',
+						width: '10%',
+						title: '专题名'
+					}, {
+						field: 'time',
+						width: '10%',
+						title: '创建时间'
+					}, {
+						field: 'contest',
+						width: '75.8%',
+						title: '具体内容'
+					}
+				]
+			],
+			page: true,
+			data: [{
+					"name": "两学一做",
+					"time": "2018-04-10",
+					"contest": "两学一做”即 “学党章党规、学系列讲话，做合格党员”学习教育。旨在培养和增强广大党员政治意识、大局意识"
+				}, {
+					"name": "两学一做",
+					"time": "2018-04-10",
+					"contest": ""
+				}, {
+					"name": "两学一做",
+					"time": "2018-04-10",
+					"contest": ""
+				}]
+				//,skin: 'line' //表格风格
+				,
+			even: true
+			//,page: true //是否显示分页
+			//,limits: [5, 7, 10]
+			//,limit: 5 //每页默认显示的数量
+		});
+	});
+	table.render({
+		cols: [
+			[{
+					field: 'id',
+					title: 'ID',
+					width: 100
+				}, {
+					fixed: 'right',
+					width: 150,
+					align: 'center',
+					toolbar: '#barDemo'
+				} //这里的toolbar值是模板元素的选择器
+			]
+		]
+	});
+</script>

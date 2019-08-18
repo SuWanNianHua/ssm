@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.TestMapper">
+<resultMap type="com.henu.party.bean.Test" id="resultMapTestMapper">
+<!--  
+//id、userName、studySection、grade、isStudy、examId
+//编号、用户名、学习章节名、实际测试结果、是否通过测试、考试编号
+-->
+  	<id column="id" property="id"/>
+  	<result column="userName" property="userName"/>
+  	<result column="studySection" property="studySection"/>
+  	<result column="grade" property="grade"/>
+  	<result column="isStudy" property="isStudy"/>
+  	<result column="examId" property="examId"/>
+  </resultMap>
+  <!--  
+	//id、userName、studySection、grade、isStudy、examId
+	//编号、用户名、学习章节名、实际测试结果、是否通过测试、考试编号
+	-->
+  	<insert id="insertTest" parameterType="com.henu.party.bean.Test"><!-- insert添加 -->
+ 	insert into tb_test(userName,studySection,grade,isStudy,examId) 
+ 	values (#{userName},#{studySection},#{grade},#{isStudy},#{examId})
+ 	</insert>
+ 	<select id="selectAllTest" resultType="com.henu.party.bean.Test">
+		select id as tid,userName,studySection,grade,isStudy,examId from tb_test
+	</select>
+	<select id="selectByIdTest" resultType="com.henu.party.bean.Test" parameterType="java.lang.Integer">
+		select * from tb_test where id = #{id}
+	</select>
+	<select id="selectByIdExamId" resultType="com.henu.party.bean.Test" parameterType="java.lang.Integer">
+		select id as tid,userName,studySection,grade,isStudy,examId from tb_test where examId = #{examId}
+	</select>
+	<delete id="batchDeleteByIdTest" parameterType="java.util.List">
+		delete from tb_test where id in 
+		<foreach collection="ids" item="i" open="("  separator="," close=")" >
+			#{i}
+		</foreach>
+	</delete>
+	<!-- 分页 -->
+	<select id="searchRowTest" parameterType="java.lang.Integer" resultType="com.henu.party.bean.Test">
+		SELECT * from tb_test ORDER BY id DESC LIMIT #{num1},#{num2}
+	</select>
+	<select id="numberTest"  resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM tb_test
+	</select>
+</mapper>

@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/party/layui/css/layui.css">
+    <script src="/party/layui/layui.js"></script>
+    <!--引入 vue 和 element -->
+    <script src="/party/vue/vue.js"></script>
+    <link rel="stylesheet" href="/party/vue/element/index.css">
+    <script src="/party/vue/element/index.js"></script>
+</head>
+<style type="text/css">
+    #search {
+        position: relative;
+        left: -15px;
+    }
+
+    .layui-btn-group {
+        margin-left: -4px;
+    }
+
+    .layui-form-label {
+        width: 130px;
+    }
+</style>
+
+<body class="layui-layout-body fm-basic" style="">
+<div id="container">
+    <form class="layui-form layui-col-md12" action="" style="text-align: center;margin-top: 10px">
+
+        <div class="layui-form-item">
+            <div class="layui-col-md6" style="margin-top: 5px">
+                <div class="" style="margin-top: 5px;float: left;">
+                    <h2 style="margin-bottom: 5px">基本信息</h2>
+                </div>
+                <a class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal" id="PartyMember">正式党员</a>
+                <a class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal" id="ProbationaryMember">预备党员</a>
+                <a class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal" id="DevelopmentObject">发展对象</a>
+                <a class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal" id="PartyActivists">入党积极分子</a>
+            </div>
+
+
+            <div class="layui-col-md6">
+                <form class="layui-form">
+                    <div class="layui-input-inline layui-col-md1">
+                        <select name="searchStatus" class="sm-input" lay-verify="required" id="searchStatus">
+                            <option value="">请选择搜索类型</option>
+                            <option value="0">党支部</option>
+                            <option value="1">用户</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline layui-col-md1">
+                        <input type="text" name="selectName" id="selectdata" required lay-verify="required"
+                               placeholder="请输入"  required="true"
+                               class="layui-input">
+                    </div>
+                    <div class="layui-btn-group layui-col-md1">
+                        <a class="layui-btn layui-btn-normal" lay-submit lay-filter="Search" id="Search">搜索</a>
+                    </div>
+                </form>
+                <div class="layui-btn-group layui-col-md3 aGroup">
+                    <a @click="addParty.addPartyDialog=true" class="layui-btn layui-btn-normal">增加</a>
+                </div>
+            </div>
+            <div class="layui-col-md12">
+                <form>
+                    <table id="StudentMessage" class="layui-hide" lay-filter="stuFirst" lay-data="{id:'test'}"></table>
+                </form>
+            </div>
+        </div>
+    </form>
+
+    <div class="layui-col-md12" style="text-align: center;margin-top: 10px;display: none" id="HumanMessage">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li class="layui-this">基本信息</li>
+                <li>学历学位</li>
+                <li>工作岗位</li>
+                <li>党政职务</li>
+                <li>技术职务</li>
+                <li>奖惩信息</li>
+                <li>民主评议</li>
+                <li>流动党员</li>
+                <li>困难党员</li>
+                <li>出国出境</li>
+            </ul>
+            <div class="layui-tab-content" style="">
+                <div class="layui-tab-item layui-show">
+                    <form action="" class="layui-form" id="userInfo">
+                        <div class="layui-col-md4" style="margin-left:15%">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">用户名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="userName" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="password" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">入党状态</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="partyState" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">姓名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="name" placeholder=""  required="true" class="layui-input"
+                                           value="学生第一党支部">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">性别</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="sex" placeholder=""  required="true" class="layui-input"
+                                           value="党支部">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">民族</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="nation" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">籍贯</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="nativePlace" class="layui-input" id="Time1">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">出生日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="birthDay" class="layui-input" id="Time1">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">入党日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="partyInDate" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="票选">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">列为积极分子日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="activeDate" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="100">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">申请入党时间</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="applyDate" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="100">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">最高学历</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="bestEdu" class="layui-input" id="Time1">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">岗位类型</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="stationType" class="layui-input" id="Time1">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">岗位名称</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="stationName" class="layui-input" id="Time1">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">身份证号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="id" placeholder=""  required="true" class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">家庭地址</label>
+                                <div class="layui-input-inline">
+                                    <input type="email" name="address" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">邮政编码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="postalcode" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">户口所在地派出所</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="policeStation" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">联系电话</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="phone" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">月缴纳党费金额</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="price" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">入党类型</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="partyType" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">转正日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="positiveDates" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">转正情况</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="positiveCase" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">进入党支部日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="enterDate" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">进入党支部类型</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="enterType" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">工作所在单位</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="workPlace" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">所属党支部</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="partyBranch" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">入党培养人</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="developPeople" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">列为发展对象日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="developDate" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">最近党课培训情况</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="partyTrain" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">最近培训日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="trainDate" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">最近培训结果</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="trainResult" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">参加工作日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="timeToWork" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">加入其他党团</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="otherParty" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">加入其他党团日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="oPDate" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">教育类别</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="eduType" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">入学日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="timeInSch" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">毕业日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="timeOutSch" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">学位</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="degree" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">工作岗位开始日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="timeToWork" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">一线情况</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="newStatus" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">是否工人</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="isWorker" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="float:right">
+                                <a class="layui-btn" lay-submit lay-filter="userInfoUpdate">提交修改</a>
+                                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="party2"></table>
+                    <div class="layui-btn-container">
+                        <a class="layui-btn" lay-event="add1" id="add1">添加</a>
+                        <a class="layui-btn" lay-event="del1" id="del1">删除</a>
+                        <a class="layui-btn" lay-event="reset1" id="reset1">修改</a>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="party3"></table>
+                    <div class="layui-btn-container">
+                        <a class="layui-btn" lay-event="add2" id="add2">添加</a>
+                        <a class="layui-btn" lay-event="del2" id="del2">删除</a>
+                        <a class="layui-btn" lay-event="reset2" id="reset2">修改</a>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="party4"></table>
+                    <div class="layui-btn-container">
+                        <a class="layui-btn" lay-event="add3" id="add3">添加</a>
+                        <a class="layui-btn" lay-event="del3" id="del3">删除</a>
+                        <a class="layui-btn" lay-event="reset3" id="reset3">修改</a>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="party5"></table>
+                    <div class="layui-btn-container">
+                        <a class="layui-btn" lay-event="add4" id="add4">添加</a>
+                        <a class="layui-btn" lay-event="del4" id="del4">删除</a>
+                        <a class="layui-btn" lay-event="reset4" id="reset4">修改</a>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="party6"></table>
+                    <div class="layui-btn-container">
+                        <a class="layui-btn" lay-event="add5" id="add5">添加</a>
+                        <a class="layui-btn" lay-event="del5" id="del5">删除</a>
+                        <a class="layui-btn" lay-event="reset5" id="reset5">修改</a>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="party7"></table>
+                    <div class="layui-btn-container">
+                        <a class="layui-btn" lay-event="add6" id="add6">添加</a>
+                        <a class="layui-btn" lay-event="del6" id="del6">删除</a>
+                        <a class="layui-btn" lay-event="reset6" id="reset6">修改</a>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <form action="" class="layui-form" id="flowPartyerMsg">
+                        <!-- <div class="layui-form-item">
+                            <label class="layui-form-label">信息类别</label>
+                            <div class="layui-input-inline">
+                                <label>信息详情</label>
+                            </div>
+                        </div> -->
+                        <div class="layui-col-md4" style="margin-left:15%">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流动类型</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="flowStyle" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流动原因</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="flowAccount" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">活动证号码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="activityId" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流出(入)地(单位)</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="flowUnit" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流出(入)日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="flowDate" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流出党支部联系人</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="outOfContacts" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流出党支部联系方式</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="outOfcontactway" class="layui-input" id="Time1">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流入党支部联系人</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="inFlowContacts" class="layui-input" id="Time1">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流入党支部联系方式</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="inContactway" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">与党组织联系情况</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="touchCondition" placeholder=""  required="true"
+                                           class="layui-input"
+                                           value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="float: right">
+                                <a class="layui-btn" lay-submit lay-filter="flowPartyerupdate">立即提交</a>
+                                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-tab-item">
+                    <form action="" id="poorPartyMsg" class="layui-form" style="margin-left:30%">
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">生活困难类型</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="poorPartstyle" placeholder=""  required="true"
+                                       class="layui-input" value="party3">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">健康状况</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="healthCondition" placeholder=""  required="true"
+                                       class="layui-input" value="333">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">生活困难补助情况</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="poorPartSubsidy" placeholder=""  required="true"
+                                       class="layui-input" value="1921.7.1.3">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">其他补助</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="otherSubsidy" placeholder=""  required="true"
+                                       class="layui-input" value="学生第一党支部">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="float:right">
+                                <a class="layui-btn" lay-submit lay-filter="poorPartyupdate">立即提交</a>
+                                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-tab-item">
+                    <form action="" id="outboardMsg" class="layui-form" style="margin-left:30%">
+                        <!-- <div class="layui-form-item">
+                            <label class="layui-form-label">信息类别</label>
+                            <div class="layui-input-inline">
+                                <label>信息详情</label>
+                            </div>
+                        </div> -->
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">前往国家(地区)</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="goCountry" placeholder=""  required="true"
+                                       class="layui-input" value="party3">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">出国(境)日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="goAbroadDate" placeholder=""  required="true"
+                                       class="layui-input" value="333">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">出国(境)原因</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="goAbroadAccount" placeholder=""  required="true"
+                                       class="layui-input" value="1921.7.1.3">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">与党组织联系情况</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="touchCondition" placeholder=""  required="true"
+                                       class="layui-input" value="学生第一党支部">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">回国情况</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="repatriateCondition" placeholder=""  required="true"
+                                       class="layui-input" value="党支部">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">回国日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="repatriateDate" placeholder=""  required="true"
+                                       class="layui-input" value="">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="float:right">
+                                <a class="layui-btn" lay-submit lay-filter="outboardupdate">立即提交</a>
+                                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="ipts">
+        <div class="layui-btn-group">
+            <a class="layui-btn  layui-btn-xs " lay-event='detail'>详情</a>
+            <a class="chnagePersonIdentity layui-btn  layui-btn-xs layui-btn-normal " lay-event='update'>转入</span></a>
+            <a class="layui-btn  layui-btn-xs layui-btn-danger " lay-event='delete'>删除</a>
+        </div>
+    </script>
+
+    <div id="msgg" style="display:none">
+        <form class="layui-form" style="margin-top:5px;margin-left:15%">
+            <div class="layui-form-item">
+                <label class="layui-form-label">教育类别</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="eduSector" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">学历</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="edu" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">入学时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="enDate" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">毕业日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="gradDate" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">学位</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="acaDegree" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">学位授予日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="dcDate" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">毕业院校</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="graduate" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="display: none">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-input-block" style="float:right;margin-right:3%">
+                <a class="layui-btn" id="EduDegreeBtn" lay-submit lay-filter="SubmitEduDegree">立即提交</a>
+                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+            </div>
+        </form>
+    </div>
+
+    <div id="msgg1" style="display:none">
+        <form class="layui-form" style="margin-top:5px;margin-left:15%">
+            <div class="layui-form-item">
+                <label class="layui-form-label">开始日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="startDate" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">结束日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="endDate" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">工作岗位</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="post" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">一线情况</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="firstLineSituation" placeholder=""  required="true" class="layui-input"
+                           value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">主要岗位</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="mainPost" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="display: none">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-input-block" style="float:right;margin-right:3%">
+                <a class="layui-btn" id="JobStationBtn" lay-submit lay-filter="submitJobStation">立即提交</a>
+                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+            </div>
+        </form>
+    </div>
+
+    <div id="msgg2" style="display:none">
+        <form class="layui-form" style="margin-top:5px;margin-left:15%">
+            <div class="layui-form-item">
+                <label class="layui-form-label">任职党组织</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="spo" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">任职机构</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="serviceOg" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">职务名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="jobName" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">批准任职日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="appDate" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">批准免职日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="remDate" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">主要职务</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="mainDuties" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">班子成员</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="teamMembers" placeholder=""  required="true" class="layui-input"
+                           value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="display: none">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-input-block" style="float:right;margin-right:3%">
+                <a class="layui-btn" id="PartyDutyBtn" lay-submit lay-filter="submitPartyDuty">立即提交</a>
+                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+            </div>
+        </form>
+    </div>
+
+    <div id="msgg3" style="display:none">
+        <form class="layui-form" style="margin-top:5px;margin-left:15%">
+            <div class="layui-form-item">
+                <label class="layui-form-label">专业技术资格</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="techTitle" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">获得资格日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="getTime" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">专业技术职务</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="techPosition" placeholder=""  required="true" class="layui-input"
+                           value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">聘任起始日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="startTime" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">聘任终止日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="endTime" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">主要职务</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="mainDuty" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="display: none">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-input-block" style="float:right;margin-right:3%">
+                <a class="layui-btn" lay-submit lay-filter="TechDutySubmit" id="TechDutyBtn">立即提交</a>
+                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+            </div>
+        </form>
+    </div>
+
+    <div id="msgg4" style="display:none">
+        <form class="layui-form" style="margin-top:5px;margin-left:15%">
+            <div class="layui-form-item">
+                <label class="layui-form-label">奖惩名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">奖惩说明</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="explanation" placeholder=""  required="true" class="layui-input"
+                           value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">奖惩原因</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="reason" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">批准机关</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="appAuthority" placeholder=""  required="true" class="layui-input"
+                           value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">批准机关级别</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="appAuthLevel" placeholder=""  required="true" class="layui-input"
+                           value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">批准日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="ratiTime" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">撤销日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="revoTime" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="display: none">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-input-block" style="float:right;margin-right:3%">
+                <a class="layui-btn" id="rewardpunishBtn" lay-submit lay-filter="SubmitRewardPunish">立即提交</a>
+                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+            </div>
+        </form>
+    </div>
+
+    <div id="msgg5" style="display:none">
+        <form class="layui-form" style="margin-top:5px;margin-left:15%">
+            <div class="layui-form-item">
+                <label class="layui-form-label">评议开始日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="startTime" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">评议结束日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="endTime" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">评议结束</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="result" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">评议奖惩</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="rewardPunish" placeholder=""  required="true" class="layui-input"
+                           value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">评议奖惩说明</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="rewardPunishReason" placeholder=""  required="true" class="layui-input"
+                           value="">
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="display: none">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" placeholder=""  required="true" class="layui-input" value="">
+                </div>
+            </div>
+
+            <div class="layui-input-block" style="float:right;margin-right:3%">
+                <a class="layui-btn" id="demoMeetBtn" lay-submit lay-filter="SubmitDemoMeet">立即提交</a>
+                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+            </div>
+        </form>
+    </div>
+
+    <!--添加党员/非党员等等-->
+    <el-dialog :visible="addParty.addPartyDialog" :fullscreen="true" :show-close="false">
+        <div style="margin: auto;text-align: center;padding-bottom: 20px;">
+            <el-select v-model="addParty.userinfo.partyState" placeholder="请选择" :inline="true">
+                <el-option
+                        v-for="t in addParty.types"
+                        :label="t.label"
+                        :value="t.value">
+                </el-option>
+            </el-select>
+        </div>
+
+
+        <el-form :model="addParty.userinfo" label-width="200px">
+            <el-row>
+                <el-col :span="11">
+                    <el-form-item :required="true" label="用户名">
+                        <el-input v-model="addParty.userinfo.userName"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="密码">
+                        <el-input v-model="addParty.userinfo.password"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="姓名">
+                        <el-input v-model="addParty.userinfo.name"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="性别">
+                        <el-select v-model="addParty.userinfo.sex" placeholder="请选择" :inline="true">
+                            <el-option
+                                    v-for="s in ['男','女']"
+                                    :label="s"
+                                    :value="s">
+                            </el-option>
+                        </el-select>
+                    </el-form-item >
+                    <el-form-item :required="true" label="出生日期">
+                        <el-date-picker
+                                v-model="addParty.userinfo.birthDay"
+                                type="date" required="true"
+                                placeholder="选择日期" value-format="yyyy-MM-dd" >
+                        </el-date-picker>
+                    </el-form-item >
+                    <el-form-item :required="true" label="民族">
+                        <el-input v-model="addParty.userinfo.nation"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="籍贯">
+                        <el-input v-model="addParty.userinfo.nativePlace"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="居民身份证号">
+                        <el-input v-model="addParty.userinfo.id"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="户口所在地派出所">
+                        <el-input v-model="addParty.userinfo.policeStation"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="参加工作日期">
+                        <el-date-picker
+                                v-model="addParty.userinfo.startWork"
+                                type="date" required="true"
+                                placeholder="选择日期" value-format="yyyy-MM-dd" >
+                        </el-date-picker>
+                    </el-form-item >
+                    <el-form-item :required="true" label="加入其他党团">
+                        <el-input v-model="addParty.otherParty"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="加入其他党团日期">
+                        <el-date-picker
+                                v-model="addParty.userinfo.oPDate"
+                                type="date" required="true"
+                                placeholder="选择日期" value-format="yyyy-MM-dd" >
+                        </el-date-picker>
+                    </el-form-item >
+
+                    <el-form-item :required="true" label="邮政编码">
+                        <el-input v-model="addParty.userinfo.postalcode"  required="true"></el-input>
+                    </el-form-item >
+
+                </el-col>
+                <el-col :span="13">
+                    <el-form-item :required="true" label="家庭住址">
+                        <el-input v-model="addParty.userinfo.address"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="联系电话">
+                        <el-input v-model="addParty.userinfo.phone"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="月缴纳党费金额(/元)">
+                        <el-input v-model="addParty.userinfo.price"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="教育类别">
+                        <el-input v-model="addParty.userinfo.eduType"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="学历">
+                        <el-input v-model="addParty.userinfo.bestEdu"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="入学日期">
+                        <el-date-picker
+                                v-model="addParty.userinfo.timeInSch"
+                                type="date" required="true"
+                                placeholder="选择日期" value-format="yyyy-MM-dd" >
+                        </el-date-picker>
+                    </el-form-item >
+                    <el-form-item :required="true" label="毕业日期">
+                        <el-date-picker
+                                v-model="addParty.userinfo.timeOutSch"
+                                type="date" required="true"
+                                placeholder="选择日期" value-format="yyyy-MM-dd" >
+                        </el-date-picker>
+                    </el-form-item >
+                    <el-form-item :required="true" label="学位">
+                        <el-input v-model="addParty.userinfo.degree"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="岗位类型">
+                        <el-select v-model="addParty.userinfo.stationType" placeholder="请选择">
+                            <el-option
+                                    v-for="t in ['在岗职工','在读学生','离退休人员','其他人员']"
+                                    :label="t"
+                                    :value="t">
+                            </el-option>
+                        </el-select>
+                    </el-form-item >
+                    <el-form-item :required="true" label="工作岗位开始日期">
+                        <el-date-picker
+                                v-model="addParty.userinfo.timeToWork"
+                                type="date" required="true"
+                                placeholder="选择日期" value-format="yyyy-MM-dd" >
+                        </el-date-picker>
+                    </el-form-item >
+                    <el-form-item :required="true" label="岗位名称">
+                        <el-input v-model="addParty.userinfo.stationName"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="一线情况">
+                        <el-input v-model="addParty.userinfo.newStatus"  required="true"></el-input>
+                    </el-form-item >
+                    <el-form-item :required="true" label="是否工人">
+                        <el-radio v-model="addParty.userinfo.isWorker" label="是">是</el-radio>
+                        <el-radio v-model="addParty.userinfo.isWorker" label="否">否</el-radio>
+                    </el-form-item >
+
+                </el-col>
+            </el-row>
+
+
+            <template v-if="addParty.typed==='party'">
+                <el-row>
+                    <el-col :span="11">
+                        <el-form-item :required="true" label="入党日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.partyInDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                        <el-form-item :required="true" label="入党类型">
+                            <el-input v-model="addParty.userinfo.partyType"  required="true"></el-input>
+                        </el-form-item >
+                        <el-form-item :required="true" label="转正日期">
+                            <el-input v-model="addParty.userinfo.positiveDates"  required="true"></el-input>
+                        </el-form-item >
+                    </el-col>
+                    <el-col :span="13">
+                        <el-form-item :required="true" label="转正情况">
+                            <el-input v-model="addParty.userinfo.positiveCase"  required="true"></el-input>
+                        </el-form-item >
+                        <el-form-item :required="true" label="进入党支部日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.enterDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                        <el-form-item :required="true" label="进入党支部类型">
+                            <el-input v-model="addParty.userinfo.enterType"  required="true"></el-input>
+                        </el-form-item >
+                        <el-form-item :required="true" label="工作所在单位">
+                            <el-input v-model="addParty.userinfo.workPlace"  required="true"></el-input>
+                        </el-form-item >
+                    </el-col>
+                </el-row>
+            </template>
+
+            <template v-if="addParty.typed==='prepared'">
+                <el-row>
+                    <el-col :span="11">
+                        <el-form-item :required="true" label="入党日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.partyInDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                        <el-form-item :required="true" label="入党类型">
+                            <el-input v-model="addParty.userinfo.partyType"  required="true"></el-input>
+                        </el-form-item >
+                        <el-form-item :required="true" label="进入党支部事时间">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.enterDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                    </el-col>
+                    <el-col :span="13">
+                        <el-form-item :required="true" label="进入党支部类型">
+                            <el-input v-model="addParty.userinfo.enterType"  required="true"></el-input>
+                        </el-form-item >
+                        <el-form-item :required="true" label="工作所在单位">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.workPlace"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                    </el-col>
+                </el-row>
+
+
+            </template>
+
+            <template v-if="addParty.typed==='develop'">
+                <el-row>
+                    <el-col :span="11">
+                        <el-form-item :required="true" label="申请入党日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.applyDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                        <el-form-item :required="true" label="入党培养人">
+                            <el-input v-model="addParty.userinfo.developPeople"  required="true"></el-input>
+                        </el-form-item >
+                        <el-form-item :required="true" label="列为积极分子日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.activeDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                        <el-form-item :required="true" label="列为发展对象日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.developDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                    </el-col>
+                    <el-col :span="13">
+                        <el-form-item :required="true" label="最近党课培训情况">
+                            <el-input v-model="addParty.userinfo.partyTrain"  required="true"></el-input>
+                        </el-form-item >
+                        <el-form-item :required="true" label="最近培训日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.trainDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                        <el-form-item :required="true" label="最近培训结果">
+                            <el-select v-model="addParty.userinfo.trainResult" placeholder="请选择">
+                                <el-option
+                                        v-for="s in ['优秀','合格','不合格']"
+                                        :label="s"
+                                        :value="s">
+                                </el-option>
+                            </el-select>
+                        </el-form-item >
+                    </el-col>
+                </el-row>
+            </template>
+
+            <template v-if="addParty.typed==='active'">
+                <el-row>
+                    <el-col :span="11">
+                        <el-form-item :required="true" label="申请入党日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.applyDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                        <el-form-item :required="true" label="入党培养人">
+                            <el-input v-model="addParty.userinfo.developPeople"  required="true"></el-input>
+                        </el-form-item >
+                        <el-form-item :required="true" label="列为积极分子日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.activeDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                    </el-col>
+                    <el-col :span="13">
+                        <el-form-item :required="true" label="最近党课培训情况">
+                            <el-input v-model="addParty.userinfo.partyTrain"  required="true"></el-input>
+                        </el-form-item >
+                        <el-form-item :required="true" label="最近培训日期">
+                            <el-date-picker
+                                    v-model="addParty.userinfo.trainDate"
+                                    type="date" required="true"
+                                    placeholder="选择日期" value-format="yyyy-MM-dd" >
+                            </el-date-picker>
+                        </el-form-item >
+                        <el-form-item :required="true" label="最近培训结果">
+                            <el-select v-model="addParty.userinfo.trainResult" required="true" placeholder="请选择" >
+                                <el-option
+                                        v-for="s in ['优秀','合格','不合格']"
+                                        :label="s"
+                                        :value="s">
+                                </el-option>
+                            </el-select>
+                        </el-form-item >
+                    </el-col>
+                </el-row>
+            </template>
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="addParty.addPartyDialog = false">取 消</el-button>
+            <el-button type="primary" @click="addPerson">确 定</el-button>
+        </div>
+    </el-dialog>
+
+
+</div>
+
+<script>
+    new Vue({
+        el: "#container",
+        data: {
+            addParty: {
+                addPartyDialog: false,
+                types: [
+                    {label: '正式党员', value: 'party'},
+                    {label: '预备党员', value: 'prepared'},
+                    {label: '发展对象', value: 'develop'},
+                    {label: '入党积极分子', value: 'active'},
+                ],
+                userinfo: {
+                    partyState: 'party',
+                }
+            }
+        },
+        created: function () {
+
+        },
+        methods: {
+            addPerson:function () {
+                var userinfo = this.addParty.userinfo
+                addPerson(userinfo)
+
+                this.addParty.addPartyDialog = false
+            }
+        }
+    })
+    var addPerson = function(){}
+    //Demo
+    layui.use(['table', 'layer', 'jquery', 'element', 'laydate', 'form'], function () {
+        var table = layui.table;
+        var layer = layui.layer;
+        var $ = layui.jquery;
+        var element = layui.element;
+        var laydate = layui.laydate;
+        var form = layui.form;
+
+        addPerson= function(userinfo){
+            for(var key in userinfo){
+                if(userinfo[key] === undefined || userinfo[key] === null){
+                    userinfo[key] = ''
+                }
+            }
+            $.post('/party/user/addUserInfo',userinfo,function (resp) {
+                if(resp){
+                    layer.msg('添加成功')
+                }
+            })
+        }
+
+        $('#add1').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '70%'],
+                content: $('#msgg')
+            })
+        })
+
+        $('#add2').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '54%'],
+                content: $('#msgg1')
+            })
+        })
+
+        $('#add3').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '70%'],
+                content: $('#msgg2')
+            })
+        })
+
+        $('#add4').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '54%'],
+                content: $('#msgg3')
+            })
+        })
+
+        $('#add5').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '70%'],
+                content: $('#msgg4')
+            })
+        })
+
+        $('#add6').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '54%'],
+                content: $('#msgg5')
+            })
+        })
+
+        $('#reset1').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '70%'],
+                content: $('#msgg'),
+                success: function () {
+                    var checkStatus = table.checkStatus('id'); //id 即为基础参数 id 对应的值
+                    var data = checkStatus.data[0]
+                    $('#EduDegreeBtn').attr("lay-filter", "updateEduDegree")
+
+                    $('#msgg').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+                }
+            })
+        })
+
+        $('#reset2').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '54%'],
+                content: $('#msgg1'),
+                success: function () {
+                    var checkStatus = table.checkStatus('id1'); //id 即为基础参数 id 对应的值
+                    var data = checkStatus.data[0]
+                    $('#JobStationBtn').attr("lay-filter", "updateJobStation")
+
+                    $('#msgg1').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+                }
+            })
+        })
+
+        $('#reset3').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '70%'],
+                content: $('#msgg2'),
+                success: function () {
+                    var checkStatus = table.checkStatus('id2'); //id 即为基础参数 id 对应的值
+                    var data = checkStatus.data[0]
+                    console.log(data)
+                    $('#PartyDutyBtn').attr("lay-filter", "updatePartyDuty")
+
+                    $('#msgg2').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+                }
+            })
+        })
+
+
+        $('#reset4').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '54%'],
+                content: $('#msgg3'),
+                success: function () {
+                    var checkStatus = table.checkStatus('id3'); //id 即为基础参数 id 对应的值
+                    var data = checkStatus.data[0]
+                    $('#TechDutyBtn').attr("lay-filter", "updateTechDuty")
+
+                    $('#msgg3').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+
+                }
+            })
+        })
+
+        $('#reset5').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '70%'],
+                content: $('#msgg4'),
+                success: function () {
+                    var checkStatus = table.checkStatus('id4'); //id 即为基础参数 id 对应的值
+                    var data = checkStatus.data[0]
+                    $('#rewardpunishBtn').attr("lay-filter", "updateRewardPunish")
+
+                    $('#msgg4').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+                }
+            })
+        })
+
+        $('#reset6').click(function () {
+            layer.open({
+                type: 1,
+                area: ['50%', '54%'],
+                content: $('#msgg5'),
+                success: function () {
+                    var checkStatus = table.checkStatus('id5'); //id 即为基础参数 id 对应的值
+                    var data = checkStatus.data[0]
+                    $('#demoMeetBtn').attr("lay-filter", "updateDemoMeet")
+
+                    $('#msgg5').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+                }
+            })
+        })
+
+        $('#del1').click(function () {
+            var checkStatus = table.checkStatus('id'); //id 即为基础参数 id 对应的值
+            var param = checkStatus.data[0]
+            console.log(param.num)
+            $.post('/party/user/deleteEduDegree', {num: param.num}, function () {
+                layer.msg('删除成功')
+                $.post('/party/user/getEduDegree', {userName: param.userName}, function (data) {
+                    EduDegreeTable(data)
+                })
+            })
+
+        })
+
+        $('#del2').click(function () {
+            var checkStatus = table.checkStatus('id1'); //id 即为基础参数 id 对应的值
+            var param = checkStatus.data[0]
+            console.log(param.num)
+            $.post('/party/user/deleteJobStation', {num: param.num}, function () {
+                layer.msg('删除成功')
+                $.post('/party/user/getJobStation', {userName: param.userName}, function (data) {
+                    JobstationTable(data)
+                })
+            })
+
+        })
+
+        $('#del3').click(function () {
+            var checkStatus = table.checkStatus('id2'); //id 即为基础参数 id 对应的值
+            var param = checkStatus.data[0]
+            console.log(param.num)
+            $.post('/party/user/deletePartyDuty', {num: param.num}, function () {
+                layer.msg('删除成功')
+                $.post('/party/user/getPartyDuty', {userName: param.userName}, function (data) {
+                    PartyDutyTable(data)
+                })
+            })
+
+        })
+
+        $('#del4').click(function () {
+            var checkStatus = table.checkStatus('id3'); //id 即为基础参数 id 对应的值
+            var param = checkStatus.data[0]
+            console.log(param.num)
+            $.post('/party/user/deleteTechDuty', {num: param.num}, function () {
+                layer.msg('删除成功')
+                $.post('/party/user/getTechDuty', {userName: param.userName}, function (data) {
+                    TectDutyTable(data)
+                })
+            })
+
+        })
+
+        $('#del5').click(function () {
+            var checkStatus = table.checkStatus('id4'); //id 即为基础参数 id 对应的值
+            var param = checkStatus.data[0]
+            console.log(param.num)
+            $.post('/party/user/deleteRewardPunish', {num: param.num}, function () {
+                layer.msg('删除成功')
+                $.post('/party/user/getRewardPunish', {userName: param.userName}, function (data) {
+                    RewardPunishTable(data)
+                })
+            })
+
+        })
+
+        $('#del6').click(function () {
+            var checkStatus = table.checkStatus('id5'); //id 即为基础参数 id 对应的值
+            var param = checkStatus.data[0]
+            console.log(param.num)
+            $.post('/party/user/deleteDemoMeet', {num: param.num}, function () {
+                layer.msg('删除成功')
+                $.post('/party/user/getDemoMeet', {userName: param.userName}, function (data) {
+                    DemoMeetTable(data)
+                })
+            })
+
+        })
+
+        var TheuserId = ''
+
+        table.on('tool(stuFirst)', function (obj) {
+            var event = obj.event;
+            var param = {
+                userName: ''
+            };
+            var that = $(this);
+            //获取表格数据
+            var userId = obj.data['userName']
+            TheuserId = userId
+            param.userName = userId
+            if (event === 'detail') {
+                console.log(param)
+                layer.open({
+                    type: 1,
+                    area: ['100%', '100%'],
+                    content: $('#HumanMessage'), //这里content是一个普通的String
+                });
+
+                $.post('/party/user/detail', param, function (data) {
+                    console.log(data)
+                    $('#userInfo').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+                })
+
+                $.post('/party/user/getOutBoard', param, function (data) {
+                    console.log(data)
+                    $('#outboardMsg').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+                })
+
+                $.post('/party/user/getFlowPartyer', param, function (data) {
+                    console.log(data)
+                    $('#flowPartyerMsg').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+                })
+
+                $.post('/party/user/getPoorPartyer', param, function (data) {
+                    console.log(data)
+                    $('#poorPartyMsg').find('input').each(function () {
+                        var that = $(this)
+                        var name = that.attr("name")
+                        if (data[name]) {
+                            that.val(data[name])
+                        }
+                    })
+                })
+
+                $.post('/party/user/getTechDuty', param, function (data) {
+                    TectDutyTable(data)
+                })
+
+                $.post('/party/user/getEduDegree', param, function (data) {
+                    EduDegreeTable(data)
+                })
+
+                $.post('/party/user/getJobStation', param, function (data) {
+                    JobstationTable(data)
+                })
+
+                $.post('/party/user/getRewardPunish', param, function (data) {
+                    RewardPunishTable(data)
+                })
+
+                $.post('/party/user/getDemoMeet', param, function (data) {
+                    DemoMeetTable(data)
+                })
+
+                $.post('/party/user/getPartyDuty', param, function (data) {
+                    PartyDutyTable(data)
+                })
+
+
+            }
+
+            //删除事件！！！！
+            if (event === 'delete') {
+                console.log(obj)
+                layer.confirm('确定删除？', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    $.post('/party/user/delete',{username:obj.data.userName},function (data) {
+                        layer.msg('删除成功')
+                    })
+                })
+            }
+
+            if (event === 'update') {
+                console.log(obj)
+                layer.confirm('确定转入？', function (index) {
+                    console.log("yes!")
+                    $.post('/party/user/updatePartyState',{username:obj.data.userName,partyState:obj.data.partyState},function (resp) {
+                        if(resp){
+                            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                            layer.close(index);
+                            layer.msg('操作成功')
+                        }
+                    });
+                    //向服务端发送转入指令
+                })
+            }
+
+            //监听提交
+            form.on('submit(userInfoUpdate)', function (data) {
+                $.post('/party/user/update', data.field, function (data) {
+
+                    layer.msg('修改成功')
+                })
+                return false;
+            });
+
+            form.on('submit(flowPartyerupdate)', function (data) {
+                data.field.userName = TheuserId
+                $.post('/party/user/updateFlowPartyer', data.field, function (data) {
+                    layer.msg('修改成功')
+                })
+                return false;
+            });
+
+            form.on('submit(poorPartyupdate)', function (data) {
+                data.field.userName = TheuserId
+                $.post('/party/user/updatePoorPartyer', data.field, function (data) {
+                    layer.msg('修改成功')
+                })
+                return false;
+            });
+
+            form.on('submit(outboardupdate)', function (data) {
+                data.field.userName = TheuserId
+                $.post('/party/user/updateOutBoard', data.field, function (data) {
+                    layer.msg('修改成功')
+                })
+                return false;
+            });
+
+            form.on('submit(TechDutySubmit)', function (data) {
+                data.field.userName = TheuserId
+                console.log(TheuserId)
+                console.log(data.field)
+                $.post('/party/user/insertTechDuty', data.field, function () {
+                    layer.msg('添加成功')
+                })
+            })
+
+            form.on('submit(updateTechDuty)', function (data) {
+                data.field.userName = TheuserId
+                console.log(TheuserId)
+                console.log(data.field)
+                $.post('/party/user/updateTechDuty', data.field, function () {
+                    layer.msg('修改成功')
+                })
+            })
+        });
+
+        form.on('submit(SubmitEduDegree)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/insertEduDegree', data.field, function () {
+                layer.msg('添加成功')
+            })
+        })
+
+        form.on('submit(updateEduDegree)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/updateEduDegree', data.field, function () {
+                layer.msg('修改成功')
+            })
+        })
+
+        form.on('submit(submitJobStation)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/insertJobStation', data.field, function () {
+                layer.msg('添加成功')
+            })
+        })
+
+        form.on('submit(updateJobStation)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/updateJobStation', data.field, function () {
+                layer.msg('修改成功')
+            })
+        })
+
+        form.on('submit(submitPartyDuty)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/insertPartyDuty', data.field, function () {
+                layer.msg('添加成功')
+            })
+        })
+
+        form.on('submit(updatePartyDuty)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/updatePartyDuty', data.field, function () {
+                layer.msg('修改成功')
+            })
+        })
+
+        form.on('submit(SubmitRewardPunish)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/insertRewardPunish', data.field, function () {
+                layer.msg('添加成功')
+            })
+        })
+
+        form.on('submit(updateRewardPunish)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/updateRewardPunish', data.field, function () {
+                layer.msg('修改成功')
+            })
+        })
+
+        form.on('submit(SubmitDemoMeet)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/insertDemoMeet', data.field, function () {
+                layer.msg('添加成功')
+            })
+        })
+
+        form.on('submit(updateDemoMeet)', function (data) {
+            data.field.userName = TheuserId
+            console.log(TheuserId)
+            console.log(data.field)
+            $.post('/party/user/updateDemoMeet', data.field, function () {
+                layer.msg('修改成功')
+            })
+        })
+
+        $('#PartyMember').click(function () {
+            $.post("/party/user/SelectByInfo", {"type": "党员"}, function (data) {
+                UserTableData(data)
+                $('.chnagePersonIdentity').html("转出")
+            })
+        })
+
+        $('#ProbationaryMember').click(function () {
+            $.post("/party/user/SelectByInfo", {"type": "预备党员"}, function (data) {
+                UserTableData(data)
+                $('.chnagePersonIdentity').html("转正")
+            })
+        })
+
+        $('#DevelopmentObject').click(function () {
+            $.post("/party/user/SelectByInfo", {"type": "发展对象"}, function (data) {
+                UserTableData(data)
+                $('.chnagePersonIdentity').html("预备")
+            })
+        })
+
+        $('#PartyActivists').click(function () {
+            $.post("/party/user/SelectByInfo", {"type": "入党积极分子"}, function (data) {
+                UserTableData(data)
+                $('.chnagePersonIdentity').html("发展")
+            })
+        })
+
+        form.on('submit(Search)', function (data) {
+            // console.log(data.elem)
+            // console.log(data.form)
+            console.log(data.field)
+            $.post("/party/user/search", data.field,
+                function (data) {
+                    console.log(data)
+                    UserTableData(data)
+                })
+            return false;
+        });
+
+
+        $.post("/party/User/UserInfo", function (data) {
+            // console.log(data)
+            UserTableData(data)
+            $('.chnagePersonIdentity').hide()
+        }, "json")
+
+        function UserTableData(data) {
+            table.render({
+                elem: '#StudentMessage',
+                // url: '/User/UserInfo',
+                id: 'id',
+                width: 1255,
+                page: true, //开启分页
+
+                cols: [
+                    [ //表头
+                    {
+                        field: 'userName',
+                        title: '序号',
+                        width: 120,
+                        sort: true,
+                        fixed: 'left'
+                        }, {
+                        field: 'name',
+                        title: '姓名',
+                        width: 80,
+                        fixed: 'left'
+                    }, {
+                        field: 'sex',
+                        title: '性别',
+                        width: 80,
+                        sort: true
+                    }, {
+                        field: 'nation',
+                        title: '民族',
+                        width: 80
+                    }, {
+                        field: 'nativePlace',
+                        title: '籍贯',
+                        width: 177
+                    }, {
+                        field: 'birthDay',
+                        title: '出生日期',
+                        width: 150,
+                        sort: true
+                    }, {
+                        field: 'bestEdu',
+                        title: '最高学历',
+                        width: 150,
+                        sort: true
+                    }, {
+                        field: 'stationType',
+                        title: '岗位类型',
+                        width: 110
+                    }, {
+                        field: 'stationName',
+                        title: '岗位名称',
+                        width: 110,
+                        sort: true
+                    }, {
+                        field: 'partyState',
+                        title: '用户身份',
+                        width: 110,
+                        sort: true
+                    }, {
+                        field: 'btn',
+                        title: '操作',
+                        width: "12%",
+                        align: "center",
+                        toolbar: "#ipts"
+                    }
+                    ]
+                ],
+                data: data
+            });
+        }
+
+        //第一个实例
+
+        function EduDegreeTable(data) {
+            //学历学位
+            table.render({
+                elem: '#party2',
+                id: 'id',
+                cols: [
+                    [ //标题栏
+                        {
+                            type: 'checkbox',
+                            width: "5%",
+                        }, {
+                        field: 'eduSector',
+                        title: '教育类别',
+                        width: "15%",
+                        align: "center"
+
+                    }, {
+                        field: 'edu',
+                        title: '学历',
+                        width: "15%",
+                        align: "center"
+
+                    }, {
+                        field: 'enDate',
+                        title: '入学时间',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'gradDate',
+                        title: '毕业日期',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'acaDegree',
+                        title: '学位',
+                        width: "10%",
+                        align: "center"
+                    }, {
+                        field: 'dcDate',
+                        title: '学位授予日期',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'graduate',
+                        title: '毕业院校',
+                        width: "10%",
+                        align: "center"
+                    }
+                    ]
+                ],
+                page: false,
+                data: data,
+                even: true
+            });
+        }
+
+        function JobstationTable(data) {
+            //工作岗位
+            table.render({
+                elem: '#party3',
+                id: 'id1',
+                cols: [
+                    [ //标题栏
+                        {
+                            type: 'checkbox',
+                            width: "5%",
+                        }, {
+                        field: 'startDate',
+                        title: '开始日期',
+                        width: "20%",
+                        align: "center"
+
+                    }, {
+                        field: 'endDate',
+                        title: '结束日期',
+                        width: "20%",
+                        align: "center"
+
+                    }, {
+                        field: 'post',
+                        title: '工作岗位',
+                        width: "20%",
+                        align: "center"
+                    }, {
+                        field: 'firstLineSituation',
+                        title: '一线情况',
+                        width: "20%",
+                        align: "center"
+                    }, {
+                        field: 'mainPost',
+                        title: '主要岗位',
+                        width: "14.5%",
+                        align: "center"
+                    }
+                    ]
+                ],
+                page: false,
+                data: data,
+                even: true
+            });
+        }
+
+
+        function PartyDutyTable(data) {
+            //党政职务
+            table.render({
+                elem: '#party4',
+                id: 'id2',
+                cols: [
+                    [ //标题栏
+                        {
+                            type: 'checkbox',
+                            width: "5%",
+                        }, {
+                        field: 'spo',
+                        title: '任职党组织',
+                        width: "15%",
+                        align: "center"
+
+                    }, {
+                        field: 'serviceOg',
+                        title: '任职机构',
+                        width: "10%",
+                        align: "center"
+
+                    }, {
+                        field: 'jobName',
+                        title: '职务名称',
+                        width: "10%",
+                        align: "center"
+                    }, {
+                        field: 'appDate',
+                        title: '批准任职日期',
+                        width: "14.5%",
+                        align: "center"
+                    }, {
+                        field: 'remDate',
+                        title: '批准免职日期',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'mainDuties',
+                        title: '主要职务',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'teamMembers',
+                        title: '班子成员',
+                        width: "15%",
+                        align: "center"
+                    },
+                    ]
+                ],
+                page: false,
+                data: data,
+                even: true
+            });
+        }
+
+        function TectDutyTable(data) {
+            //技术职务
+            table.render({
+                elem: '#party5',
+                id: 'id3',
+                cols: [
+                    [ //标题栏
+                        {
+                            type: 'checkbox',
+                            width: "5%",
+                        }, {
+                        field: 'techTitle',
+                        title: '专业技术资格',
+                        width: "20%",
+                        align: "center"
+
+                    }, {
+                        field: 'getTime',
+                        title: '获得资格日期',
+                        width: "15%",
+                        align: "center"
+
+                    }, {
+                        field: 'techPosition',
+                        title: '专业技术职务',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'startTime',
+                        title: '聘任起始日期',
+                        width: "14.5%",
+                        align: "center"
+                    }, {
+                        field: 'endTime',
+                        title: '聘任终止日期',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'mainDuty',
+                        title: '主要职务',
+                        width: "15%",
+                        align: "center"
+                    }
+                    ]
+                ],
+                page: false,
+                data: data,
+                even: true
+            });
+        }
+
+        function RewardPunishTable(data) {
+            //奖惩信息
+            table.render({
+                elem: '#party6',
+                id: 'id4',
+                cols: [
+                    [ //标题栏
+                        {
+                            type: 'checkbox',
+                            width: "5%",
+                        }, {
+                        field: 'name',
+                        title: '奖惩名称',
+                        width: "15%",
+                        align: "center"
+
+                    }, {
+                        field: 'explanation',
+                        title: '奖惩说明',
+                        width: "10%",
+                        align: "center"
+
+                    }, {
+                        field: 'reason',
+                        title: '奖惩原因',
+                        width: "10%",
+                        align: "center"
+                    }, {
+                        field: 'appAuthority',
+                        title: '批准机关',
+                        width: "14.5%",
+                        align: "center"
+                    }, {
+                        field: 'appAuthLevel',
+                        title: '批准机关级别',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'ratiTime',
+                        title: '批准日期',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'revoTime',
+                        title: '撤销日期',
+                        width: "15%",
+                        align: "center"
+                    },
+                    ]
+                ],
+                page: false,
+                data: data,
+                even: true
+            });
+        }
+
+        function DemoMeetTable(data) {
+            //民主评议
+            table.render({
+                elem: '#party7',
+                id: 'id5',
+                cols: [
+                    [ //标题栏
+                        {
+                            type: 'checkbox',
+                            width: "5%",
+                        }, {
+                        field: 'startTime',
+                        title: '评议开始日期',
+                        width: "20%",
+                        align: "center"
+
+                    }, {
+                        field: 'endTime',
+                        title: '评议结束日期',
+                        width: "15%",
+                        align: "center"
+
+                    }, {
+                        field: 'result',
+                        title: '评议结束',
+                        width: "15%",
+                        align: "center"
+                    }, {
+                        field: 'rewardPunish',
+                        title: '评议奖惩',
+                        width: "14.5%",
+                        align: "center"
+                    }, {
+                        field: 'rewardPunishReason',
+                        title: '评议奖惩说明',
+                        width: "30%",
+                        align: "center"
+                    }
+                    ]
+                ],
+                page: false,
+                data: data,
+                even: true
+            });
+
+        }
+
+    });
+</script>
+</body>
+
+</html>

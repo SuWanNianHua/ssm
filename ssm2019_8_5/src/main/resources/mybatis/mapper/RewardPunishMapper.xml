@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.RewardPunishMapper">
+    <insert id="insert" parameterType="com.henu.party.bean.RewardPunish">
+        INSERT INTO tb_rewardpunish(
+          userName,name,explanation,
+          reason,appAuthority,appAuthLevel,
+          ratiTime,revoTime
+        ) VALUES(
+          #{userName},#{name},#{explanation},
+          #{reason},#{appAuthority},#{appAuthLevel},
+          #{ratiTime},#{revoTime}
+        )
+    </insert>
+
+    <delete id="deleteByNum" parameterType="int">
+        DELETE  FROM tb_rewardpunish  WHERE num=#{num}
+    </delete>
+
+    <select id="selectByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.RewardPunish">
+        SELECT * FROM tb_rewardpunish WHERE
+        userName=#{userName}
+    </select>
+
+    <update id="update" parameterType="com.henu.party.bean.RewardPunish">
+        UPDATE tb_rewardpunish SET
+          userName=#{userName},
+          name=#{name},
+          explanation=#{explanation},
+          reason=#{reason},
+          appAuthority=#{appAuthority},
+          appAuthority=#{appAuthority},
+          ratiTime=#{ratiTime},
+          revoTime=#{revoTime}
+        WHERE num=#{num}
+    </update>
+</mapper>

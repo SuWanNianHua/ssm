@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.StudyMapper">
+<resultMap type="com.henu.party.bean.Study" id="resultMapStudyMapper">
+<!--  
+//id、userName、studySection、studyTime、isStudy
+//id、用户名、学习章节名、学习时间、是否完成学习
+-->
+  	<id column="id" property="id"/>
+  	<result column="userName" property="userName"/>
+  	<result column="studySection" property="studySection"/>
+  	<result column="studyTime" property="studyTime"/>
+  	<result column="isStudy" property="isStudy"/>
+  </resultMap>
+<!--  
+//id、userName、studySection、studyTime、isStudy
+//id、用户名、学习章节名、学习时间、是否完成学习
+-->
+  	<insert id="insertStudy" parameterType="com.henu.party.bean.Study"><!-- insert添加 -->
+ 	insert into tb_study(userName,studySection,studyTime,isStudy) 
+ 	values (#{userName},#{studySection},#{studyTime},#{isStudy})
+ 	</insert>
+ 	<select id="selectAllStudy" resultMap="resultMapStudyMapper">
+		select * from tb_study
+	</select>
+	<select id="selectByIdStudy" resultType="com.henu.party.bean.Study" parameterType="java.lang.Integer">
+		select * from tb_study where id = #{id}
+	</select>
+	<select id="selectLike" parameterType="java.lang.String" resultType="com.henu.party.bean.Study" ><!-- selectByUsername查询 -->
+  	select * from tb_study where 
+  	id like concat('%',#{Keywords},'%') or 
+  	userName like concat('%',#{Keywords},'%')
+  	</select>
+	<delete id="batchDeleteByIdStudy" parameterType="java.util.List">
+		delete from tb_study where id in 
+		<foreach collection="ids" item="i" open="("  separator="," close=")" >
+			#{i}
+		</foreach>
+	</delete>
+	<!-- 分页 -->
+	<select id="searchRowStudy" parameterType="java.lang.Integer" resultType="com.henu.party.bean.Study">
+		SELECT * from tb_study ORDER BY id DESC LIMIT #{num1},#{num2}
+	</select>
+	<select id="numberStudy"  resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM tb_study
+	</select>
+</mapper>

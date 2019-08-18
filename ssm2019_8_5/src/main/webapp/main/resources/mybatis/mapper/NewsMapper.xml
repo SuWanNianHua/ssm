@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.henu.party.mapper.NewsMapper">
+    	<!-- 全部新闻页码查询 -->
+    	<select id="selectAllNews" parameterType="java.lang.Integer" resultType="com.henu.party.bean.PartyNews">
+    		select * from tb_news where 
+        			id >=(select id from tb_news order by id limit #{arg0},1)limit #{arg1}
+    		
+    	</select>
+    	<!-- 最新新闻查找 -->
+        <select id="selectNewNews" parameterType="java.lang.Integer" resultType="com.henu.party.bean.PartyNews">
+        	select * from tb_news order by createDate desc limit #{value}
+        </select>
+        <!-- 批量删除新闻 -->
+        <delete id="deleteNews" parameterType="ArrayList">
+        	delete from tb_news  where id in
+		    <foreach collection="array" index="index" item="item"  open="(" separator="," close=")">
+				#{item}
+			</foreach> 
+			
+        </delete>
+        <!-- 插入一条新闻 
+				//newsPic,#{newsPic},-->
+        <insert id="insertNew" parameterType="com.henu.party.bean.PartyNews" >
+        	insert into tb_news
+        	(
+        	 	id,
+				type,
+				title,
+				secTitle,
+				author,
+				`from`,
+				content,
+				clicked,
+				createDate,
+				createPeo,
+				extralFile,
+				remark
+				        	 	
+        	) 
+        	values(
+        		#{id},
+				#{type},
+				#{title},
+				#{secTitle},
+				#{author},
+				#{from},
+				#{content},
+				#{clicked},
+				#{createDate},
+				#{createPeo},
+				#{extralFile},
+				#{remark}
+        	)
+        </insert>
+        <!-- 按类页码查找 -->
+        <select id="findByPage" resultType="com.henu.party.bean.PartyNews">
+        	select * from tb_news where id IN
+        	(select id from tb_news where Type=#{arg0} order by id desc) limit #{arg1},#{arg2}
+        </select>
+        <!-- (按类)查询记录数 -->
+        <select id="findCount" parameterType="String" resultType="Integer">
+        	select count(*) from tb_news where Type=#{value} 
+        </select>
+        <!-- 查询总记录数 -->
+        <select id="findAllCount" resultType="Integer">
+        	select count(*) from tb_news 
+        </select>
+    </mapper>

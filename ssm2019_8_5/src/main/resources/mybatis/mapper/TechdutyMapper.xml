@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.TechdutyMapper">
+    <insert id="insert" parameterType="com.henu.party.bean.TechDuty">
+        INSERT INTO tb_techduty(
+          userName,
+          techTitle,
+          getTime,
+          techPosition,
+          startTime,
+          endTime,
+          mainDuty
+        ) VALUES(
+          #{userName},
+          #{techTitle},
+          #{getTime},
+          #{techPosition},
+          #{startTime},
+          #{endTime},
+          #{mainDuty}
+        )
+    </insert>
+
+    <delete id="deleteByNum" parameterType="int">
+        DELETE FROM tb_techduty WHERE num=#{num}
+    </delete>
+
+    <update id="update" parameterType="com.henu.party.bean.TechDuty">
+        UPDATE tb_techduty SET
+          userName=#{userName},
+          techTitle=#{techTitle},
+          getTime=#{getTime},
+          techPosition=#{techPosition},
+          startTime=#{startTime},
+          endTime=#{endTime},
+          mainDuty=#{mainDuty}
+        WHERE num=#{num}
+    </update>
+
+    <select id="selectByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.TechDuty">
+        SELECT * FROM tb_techduty WHERE userName=#{userName}
+    </select>
+</mapper>

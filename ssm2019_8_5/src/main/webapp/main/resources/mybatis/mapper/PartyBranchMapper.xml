@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.henu.party.mapper.PartyBranchMapper">
+   		<!-- 根据userName查询某一党支部所有信息 -->
+    	<select id="selectManagerByUsername" parameterType="java.lang.String" resultType="com.henu.party.bean.PartyBranch">
+    		select * from tb_partyBranch where userName=#{userName}
+    	</select>
+    
+    	<!-- 查询所有党支部 -->
+    	<select id="selectAllPartyBranch" resultType="com.henu.party.bean.PartyBranch">
+    		select * from tb_partyBranch
+    	</select>
+    
+    	<!-- 模糊查询某党支部 -->
+    	<select id="selectFuzzy" parameterType="java.lang.String" resultType="com.henu.party.bean.PartyBranch">
+			select 
+				*
+			from 
+				tb_partyBranch
+			where partyName like concat('%',#{value},'%') or userName like concat('%',#{value},'%')
+		</select>
+    
+    	<!-- 修改党支部管理员密码 -->
+    	<update id="updateUserPwd" parameterType="com.henu.party.bean.PartyBranch">
+    		update tb_partyBranch
+    		set password=#{password}
+    		where partyName=#{partyName}
+    	</update>
+    	
+    	<!-- 根据partyName查询某一党支部所有信息 -->
+    	<select id="selectManagerByPartyName" parameterType="java.lang.String" resultType="com.henu.party.bean.PartyBranch">
+    		select * from tb_partyBranch where partyName=#{partyName}
+    	</select>
+    	
+    	<!-- 批量删除党支部信息 -->
+    	<delete id="batchDeletePartyBranch" parameterType="java.lang.String" >
+    		delete from tb_partyBranch 
+    		where num in 
+    		<foreach collection="pids" open="(" close=")" separator="," item="pid">
+    			#{pid}
+    		</foreach>
+    	</delete>
+    	
+    	<!-- 新增党支部信息 -->
+    	<insert id="insertOnePartyBranch" parameterType="com.henu.party.bean.PartyBranch">
+    		insert into tb_partyBranch values(uuid(),#{userName},123,#{partyId},#{partyName},#{partyType},#{partyAddress},#{leaderDate},#{endDate},#{selectType},#{supposeNum},#{arriveNum},#{createDate},#{startMeetDate},#{endMeetDate},#{address},#{zipcode},#{phone},#{faxNum},#{remark})
+    	</insert>
+    	
+    	<!-- 根据num修改党支部基本信息 -->
+    	<update id="updatePartyBranchInfo" parameterType="com.henu.party.bean.PartyBranch">
+    		update tb_partyBranch
+    		set userName=#{userName},password=#{password},partyId=#{partyId},partyName=#{partyName},partyType=#{partyType},partyAddress=#{partyAddress},leaderDate=#{leaderDate},endDate=#{endDate},selectType=#{selectType},supposeNum=#{supposeNum},arriveNum=#{arriveNum},createDate=#{createDate},startMeetDate=#{startMeetDate},endMeetDate=#{endMeetDate},address=#{address},zipcode=#{zipcode},phone=#{phone},faxNum=#{faxNum},remark=#{remark}
+    		where num=#{num}
+    	</update>
+    	
+    	<!-- 根据partyId查询党支部班子成员信息 -->
+    	<select id="selectParBranMemberByPartyId" parameterType="java.lang.String" resultType="com.henu.party.bean.PartyBranchMember">
+    		select * from tb_partyBranchMember where partyId = #{partyId}
+    	</select>
+    	
+    	<!-- 根据partyId查询党支部奖惩信息 -->
+    	<select id="selectRePuPartyByPartyId" parameterType="java.lang.String" resultType="com.henu.party.bean.RewardPunishParty">
+    		select * from tb_rewardPunishParty where partyId = #{partyId}
+    	</select>
+    	
+    	<!-- 根据partyId查询党支部关联单位 -->
+    	<select id="selectParCompanyByPartyId" parameterType="java.lang.String" resultType="com.henu.party.bean.PartyCompany">
+    		select * from tb_partyCompany where partyId = #{partyId}
+    	</select>
+    	
+    	<!-- 新增党组织班子成员 -->
+    	<insert id="insertParBranchMem" parameterType="com.henu.party.bean.PartyBranchMember">
+    		insert into tb_partyBranchMember values(uuid(),#{partyId},#{memberName},#{partyBelong},#{dutyName},#{dutyDescription},#{dutyLevel},#{startDate},#{endDate},#{isMember})
+    	</insert>
+    	
+    	<!-- 批量删除或删除指定党组织班子成员 -->
+    	<delete id="batchDeleteParMem" parameterType="java.lang.String" >
+    		delete from tb_partyBranchMember
+    		where num in 
+    		<foreach collection="pids" open="(" close=")" separator="," item="pid">
+    			#{pid}
+    		</foreach>
+    	</delete>
+    	
+    	<!-- 根据num修改党组织班子成员 -->
+    	<update id="updateParBranchMem" parameterType="com.henu.party.bean.PartyBranchMember">
+    		update tb_partyBranchMember
+    		set memberName=#{memberName},dutyName=#{dutyName},dutyDescription=#{dutyDescription},dutyLevel=#{dutyLevel},startDate=#{startDate},endDate=#{endDate},isMember=#{isMember}
+    		where num=#{num}
+    	</update>
+    	
+    	<!-- 新增党组织奖惩信息 -->
+    	<insert id="insertParBranchRwd" parameterType="com.henu.party.bean.RewardPunishParty">
+    		insert into tb_rewardPunishParty values(uuid(),#{partyId},#{name},#{explanation},#{reason},#{appAuthority})
+    	</insert>
+    	
+    	<!-- 批量删除或删除指定党组织奖惩信息 -->
+    	<delete id="batchDeleteParRepu" parameterType="java.lang.String" >
+    		delete from tb_rewardPunishParty 
+    		where num in 
+    		<foreach collection="pids" open="(" close=")" separator="," item="pid">
+    			#{pid}
+    		</foreach>
+    	</delete>
+    	
+    	<!-- 根据num修改党组织奖惩信息 -->
+    	<update id="updateParRepu" parameterType="com.henu.party.bean.RewardPunishParty">
+    		update tb_rewardPunishParty
+    		set name=#{name},explanation=#{explanation},reason=#{reason},appAuthority=#{appAuthority}
+    		where num=#{num}
+    	</update>
+    	
+    	<!-- 新增党组织关联单位 -->
+    	<insert id="insertParBranchCom" parameterType="com.henu.party.bean.PartyCompany">
+    		insert into tb_partyCompany values(uuid(),#{partyId},#{name},#{nature},#{industry},#{ecoType},#{companyType},#{companyScale},#{workers})
+    	</insert>
+    	
+    	<!-- 批量删除或删除指定党组织关联单位 -->
+    	<delete id="batchDeleteParCom" parameterType="java.lang.String" >
+    		delete from tb_partyCompany 
+    		where num in 
+    		<foreach collection="pids" open="(" close=")" separator="," item="pid">
+    			#{pid}
+    		</foreach>
+    	</delete>
+    	
+    	<!-- 根据num修改党组织关联单位 -->
+    	<update id="updateParCom" parameterType="com.henu.party.bean.PartyCompany">
+    		update tb_partyCompany
+    		set name=#{name},nature=#{nature},industry=#{industry},ecoType=#{ecoType},companyType=#{companyType},companyScale=#{companyScale},workers=#{workers}
+    		where num=#{num}
+    	</update>
+    	
+    </mapper>

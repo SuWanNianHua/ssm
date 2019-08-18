@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>管理页面</title>
+    <link rel="stylesheet" href="/party/layui/css/layui.css">
+    <script src="/party/layui/layui.js"></script>
+</head>
+
+<body class="layui-layout-body">
+
+    <div class="layui-layout layui-layout-admin">
+        <!-- 头部导航栏 -->
+        <div class="layui-header">
+            <div class="layui-logo">
+                党员信息管理平台
+            </div>
+
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"></a>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">软件学院党委</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="">基本资料</a>
+                        </dd>
+                        <dd>
+                            <a href="">安全设置</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">退出</a>
+                </li>
+            </ul>
+        </div>
+        <!-- 左侧导航栏 -->
+        <!-- 可以更改class更换导航栏颜色，eg：class="layui-bg-blue" -->
+        <!-- 默认使二级标题打开，加  layui-nav-itemed -->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+            	
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                	<li class="layui-nav-item">
+                        <a href="all-party-stu.html">首页</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="layui-nav-item-title" href="javascript:;">党支部组织管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="party-stu1.html">学生第一支部</a>
+                            </dd>
+                            <dd>
+                                <a href="party-stu2.html">学生第二支部</a>
+                            </dd>
+                            <dd>
+                                <a href="party-stu3.html">学生第三支部</a>
+                            </dd>
+                            <dd>
+                                <a href="party-stu4.html">教工网络工程党支部</a>
+                            </dd>
+                            <dd>
+                                <a href="party-stu5.html">教工计算机应用工程党支部</a>
+                            </dd>
+                            <dd>
+                                <a href="party-stu6.html">软件学院党委</a>
+                            </dd>
+                            <dd>
+                                <a href="party-stu7.html">团委</a>
+                            </dd>
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a class="layui-nav-item-title" href="javascript:;">党员信息管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="MessageManager.html">基本信息</a>
+                            </dd>
+                            <dd>
+                                <a href="party-countManage.html">统计管理</a>
+                            </dd>
+                            <dd>
+                                <a href="upload&download.html">文件上传与下载</a>
+                            </dd>
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a class="layui-nav-item-title" href="javascript:;">在线学习</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="xxnr.html">学习内容</a>
+                            </dd>
+                            <dd>
+                                <a href="xxjg.html">学习结果</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    
+                    <li class="layui-nav-item">
+                        <a class="layui-nav-item-title" href="javascript:;">党课测试</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="csnr.html">测试内容</a>
+                            </dd>
+                            <dd>
+                                <a href="csjg.html">测试结果</a>
+                            </dd>
+                    </li>
+                            
+
+                    <li class="layui-nav-item">
+                        <a href="ztjy.html">专题教育</a>
+                    </li>
+                    
+                    <!-- <li class="layui-nav-item">
+                        <a href="javascript:;">退出登录</a>
+                    </li> -->
+                    
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <iframe id="iframe" src="all-party-stu.html" style="box-sizing:border-box;padding:20px 15px 0 15px;width:101%;height:99.5%;"></iframe>
+        </div>
+
+    </div>
+
+
+    <script>
+        //JavaScript代码区域
+        layui.use(['element','jquery'], function () {
+            var element = layui.element
+            var $ = layui.jquery
+
+            var $navs = $('.layui-nav>.layui-nav-item').find('a:not(".layui-nav-item-title")')
+            var $iframe = $('#iframe')
+            $navs.click(function(event){
+                var href = $(this).attr('href')
+                $iframe.attr('src', href)
+                
+                event.preventDefault()
+            })
+        
+        })
+    </script>
+</body>
+
+</html>

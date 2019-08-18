@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.PartyDutyMapper">
+
+    <insert id="insert" parameterType="com.henu.party.bean.PartyDuty">
+        INSERT INTO tb_partyduty(
+          userName,spo,serviceOg,
+          jobName,appDate,remDate,
+          mainDuties,teamMembers
+        ) VALUES(
+          #{userName},#{spo},#{serviceOg},
+          #{jobName},#{appDate},#{remDate},#{mainDuties},#{teamMembers}
+        )
+    </insert>
+
+    <delete id="delectByNum" parameterType="int">
+        DELETE  FROM tb_partyduty  WHERE num=#{num}
+    </delete>
+
+    <select id="selectByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.PartyDuty">
+        SELECT * FROM tb_partyduty WHERE
+        userName=#{userName}
+    </select>
+
+    <update id="update" parameterType="com.henu.party.bean.PartyDuty">
+        UPDATE tb_partyduty SET
+          userName=#{userName},
+          spo=#{spo},
+          serviceOg=#{serviceOg},
+          jobName=#{jobName},
+          appDate=#{appDate},
+          remDate=#{remDate},
+          mainDuties=#{mainDuties},
+          teamMembers=#{teamMembers}
+        WHERE num=#{num}
+    </update>
+
+</mapper>

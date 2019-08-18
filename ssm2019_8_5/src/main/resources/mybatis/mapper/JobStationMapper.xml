@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.JobStationMapper">
+    <insert id="insert" parameterType="com.henu.party.bean.JobStation">
+        INSERT INTO tb_jobstation(
+          userName,startDate,endDate,
+          post,firstLineSituation,
+          mainPost
+        ) VALUES(
+          #{userName},#{startDate},#{endDate},
+          #{post},#{firstLineSituation},#{mainPost}
+        )
+    </insert>
+
+    <delete id="delectByNum" parameterType="int">
+        DELETE  FROM tb_jobstation  WHERE num=#{num}
+    </delete>
+
+    <select id="selectByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.JobStation">
+        SELECT * FROM tb_jobstation WHERE
+        userName=#{userName}
+    </select>
+
+    <update id="update" parameterType="com.henu.party.bean.JobStation">
+        UPDATE tb_jobstation SET
+          userName=#{userName},
+          startDate=#{startDate},
+          endDate=#{endDate},
+          post=#{post},
+          firstLineSituation=#{firstLineSituation},
+          mainPost=#{mainPost}
+        WHERE num=#{num}
+    </update>
+</mapper>

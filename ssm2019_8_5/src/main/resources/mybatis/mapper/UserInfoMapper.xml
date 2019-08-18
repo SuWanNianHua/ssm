@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.UserInfoMapper">
+	<cache/>
+	<!-- 查找所有用户信息 （无条件）-->
+	<select id="selectAllUserInfo" resultType="com.henu.party.bean.UserInfo">
+		select * from tb_userInfo;
+	</select>
+	<!-- 分页查找所有用户信息 （有条件）-->
+	<select id="selectAllUserInfo_page" parameterType="int" resultType="com.henu.party.bean.UserInfo">
+		select * from tb_userInfo where partyState != 0 order by partyState limit #{arg0},#{arg1}
+	</select>
+	
+	<!-- 根据用户状态查找用户 -->
+	<select id="selectMemberInfo" parameterType="String" resultType="com.henu.party.bean.UserInfo">
+		select * from tb_userInfo where partyState = #{State}
+	</select>
+	<!-- 分页根据用户状态查找用户 -->
+	<select id="selectMemberInfo_page" parameterType="int" resultType="com.henu.party.bean.UserInfo">
+		select * from tb_userInfo where partyState = #{arg0} order by partyState limit #{arg1},#{arg2}
+	</select>
+	
+	<!-- 根据党支部信息查找用户 -->
+	<select id="selectByPartyBranch" resultType="com.henu.party.bean.UserInfo">
+		select * from tb_userInfo where partyBranch like concat('%',#{arg0},'%')
+	</select>
+	<!-- 根据党支部信息查找用户（分页） -->
+	<select id="selectByPartyBranch_page" resultType="com.henu.party.bean.UserInfo">
+		select * from tb_userInfo where partyBranch like concat('%',#{arg0},'%')
+	</select>
+	
+	<!-- 根据姓名查找 -->
+	<select id="selectByUserName" resultType="com.henu.party.bean.UserInfo">
+		select * from tb_userInfo where name like concat('%',#{arg0},'%')
+	</select>
+	<!-- 根据姓名查找（分页）-->
+	<select id="selectByUserName_page" resultType="com.henu.party.bean.UserInfo">
+		select * from tb_userInfo where name like concat('%',#{arg0},'%')
+		and partyState != 0
+		<if test="arg1 != -1">
+		and partyState = #{arg1}
+		</if>
+		order by partyState
+		limit #{arg2},#{arg3}
+	</select>
+	
+	<!-- 批量删除用户 -->
+	<delete id="batchDeleteUser" parameterType="String">
+		delete from tb_userInfo where userName in
+		<foreach collection="nums" item="num" open="(" close=")" separator=",">
+			#{num}
+		</foreach>
+	</delete>
+	
+	<!-- 修改用户入党状态 -->
+	<update id="updatePartyState">
+		update tb_userInfo set partyState = #{param2} where userName in 
+		<foreach collection="nums" item="num" open="(" close=")" separator=",">
+			#{num}
+		</foreach>
+	</update>
+	
+	<!-- 新增用户 -->
+	<insert id="insertUser" parameterType="com.henu.party.bean.UserInfo">
+		insert into tb_userInfo(userName,password,partyState,name,sex,nation,nativePlace,
+			birthDay,partyInDate,activeDate,applyDate,bestEdu,stationType,stationName,id,
+			address,postalcode,policeStation,startWork,otherParty,oPDate,phone,price,eduType,
+			timeInSch,timeOutSch,degree,timeToWork,newStatus,isWorker,partyType,positiveDates,
+			positiveCase,enterDate,enterType,workPlace,partyBranch,developPeople,developDate,
+			partyTrain,trainDate,trainResult) 
+		values(#{userName},#{password},#{partyState},#{name},#{sex},#{nation},#{nativePlace},
+			#{birthDay},#{partyInDate},#{activeDate},#{applyDate},#{bestEdu},#{stationType},
+			#{stationName},#{id},#{address},#{postalcode},#{policeStation},#{startWork},
+			#{otherParty},#{oPDate},#{phone},#{price},#{eduType},#{timeInSch},#{timeOutSch},
+			#{degree},#{timeToWork},#{newStatus},#{isWorker},#{partyType},#{positiveDates},
+			#{positiveCase},#{enterDate},#{enterType},#{workPlace},#{partyBranch},
+			#{developPeople},#{developDate},#{partyTrain},#{trainDate},#{trainResult})
+	</insert>
+	
+	<!-- 查询所有信息数目 -->
+	<select id="findAllCount" resultType="Integer">
+        select count(*) from tb_userInfo where partyState != 0
+    </select>
+    <!-- 查询不同身份记录数 -->
+	<select id="findMemCount" parameterType="int" resultType="Integer">
+        select count(*) from tb_userInfo where partyState = ${value}
+    </select>
+     <!-- 查询用户输入党支部中用户记录数 -->
+	<select id="findBranchCount" parameterType="String" resultType="Integer">
+        select count(*) from tb_userInfo where partyBranch like concat('%',#{value},'%')
+    </select>
+   <!-- 查询用户输入姓名记录数 -->
+	<select id="findNameCount" parameterType="String" resultType="Integer">
+        select count(*) from tb_userInfo where name like concat('%',#{value},'%')
+    </select> 
+	
+	<select id="selectOnlyUserName" parameterType="String" resultType="String">
+		select name from tb_userInfo where userName = ${value}
+	</select>
+	
+	<select id="selectAllEduDegree" resultType="com.henu.party.bean.EduDegree">
+		select * from tb_eduDegree
+	</select>
+	<select id="selectAllDemoMeet" resultType="com.henu.party.bean.DemoMeet">
+		select * from tb_demoMeet
+	</select>
+	<select id="selectAllJobStation" resultType="com.henu.party.bean.JobStation">
+		select * from tb_jobStation
+	</select>
+	<select id="selectAllPartyDuty" resultType="com.henu.party.bean.PartyDuty">
+		select * from tb_partyDuty
+	</select>
+	<select id="selectAllRewardPunish" resultType="com.henu.party.bean.RewardPunish">
+		select * from tb_rewardPunish
+	</select>
+	<select id="selectAllTechDuty" resultType="com.henu.party.bean.TechDuty">
+		select * from tb_techDuty
+	</select>
+	<select id="selectAllFlowPartyer" resultType="com.henu.party.bean.FlowPartyer">
+		select * from tb_flowPartyer
+	</select>
+	<select id="selectAllPoorPartyer" resultType="com.henu.party.bean.PoorPartyer">
+		select * from tb_poorPartyer
+	</select>
+	<select id="selectAllOutBoard" resultType="com.henu.party.bean.OutBoard">
+		select * from tb_outBoard
+	</select>
+
+	<delete id="deleteByUserName" parameterType="String">
+		DELETE FROM tb_userInfo WHERE userName=#{userName}
+	</delete>
+
+	<select id="selectUserInfoByUsername" resultType="com.henu.party.bean.UserInfo">
+		SELECT * from tb_userInfo WHERE userName=#{userName}
+	</select>
+	
+	<update id="updateByUserName" parameterType="com.henu.party.bean.UserInfo">
+		update tb_userInfo set
+		userName=#{userName},password=#{password},partyState=#{partyState},name=#{name},sex=#{sex},nation=#{nation},
+		nativePlace=#{nativePlace},birthDay=#{birthDay},partyInDate=#{partyInDate},activeDate=#{activeDate},applyDate=#{applyDate},
+		bestEdu=#{bestEdu},stationType=#{stationType},stationName=#{stationName},id=#{id},address=#{address},postalcode=#{postalcode},
+		policeStation=#{policeStation},startWork=#{startWork},otherParty=#{otherParty},oPDate=#{oPDate},phone=#{phone},price=#{price},eduType=#{eduType},
+		timeInSch=#{timeInSch},timeOutSch=#{timeOutSch},degree=#{degree},timeToWork=#{timeToWork},newStatus=#{newStatus},isWorker=#{isWorker},
+		partyType=#{partyType},positiveDates=#{positiveDates},positiveCase=#{positiveCase},enterDate=#{enterDate},enterType=#{enterType},workPlace=#{workPlace},
+		partyBranch=#{partyBranch},developPeople=#{developPeople},developDate=#{developDate},partyTrain=#{partyTrain},trainDate=#{trainDate},
+		trainResult=#{trainResult}
+		WHERE userName = #{userName}
+	</update>
+    
+    <select id="selectOutboardByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.OutBoard">
+        select * from tb_outboard where userName=#{userName}
+    </select>
+
+    <select id="selectFlowPartyerByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.FlowPartyer">
+        select * from tb_flowpartyer where userName=#{userName}
+    </select>
+
+    <select id="selectPoorPartyerByUserName" parameterType="java.lang.String" resultType="com.henu.party.bean.PoorPartyer">
+        select * from tb_poorpartyer where userName=#{userName}
+    </select>
+
+	<update id="updateOutboard">
+		UPDATE  tb_outboard SET
+			userName=#{userName},
+			goCountry=#{goCountry},
+			goAbroadDate=#{goAbroadDate},
+			goAbroadAccount=#{goAbroadAccount},
+			touchCondition=#{touchCondition},
+			repatriateCondition=#{repatriateCondition},
+			repatriateDate=#{repatriateDate}
+		WHERE userName=#{userName}
+	</update>
+
+	<update id="updateFlowPartyer">
+		UPDATE  tb_flowpartyer SET
+			userName=#{userName},
+			flowStyle=#{flowStyle},
+			flowAccount=#{flowAccount},
+			activityId=#{activityId},
+			flowUnit=#{flowUnit},
+			flowDate=#{flowDate},
+			outOfContacts=#{outOfContacts},
+			outOfContactway=#{outOfcontactway},
+			inFlowContacts=#{inFlowContacts},
+			inContactway=#{inContactway},
+			touchCondition=#{touchCondition}
+		WHERE userName=#{userName}
+	</update>
+
+	<update id="updatePoorPartyer">
+		UPDATE  tb_poorpartyer SET
+			userName=#{userName},
+			poorPartstyle=#{poorPartstyle},
+			healthCondition=#{healthCondition},
+			poorPartSubsidy=#{poorPartSubsidy},
+			otherSubsidy=#{otherSubsidy}
+		WHERE userName=#{userName}
+	</update>
+	
+	<!--<delete id="delectByUserName" parameterType="String">-->
+		<!--delete from tb_userInfo where userName=#{userName}-->
+	<!--</delete>-->
+
+
+</mapper>

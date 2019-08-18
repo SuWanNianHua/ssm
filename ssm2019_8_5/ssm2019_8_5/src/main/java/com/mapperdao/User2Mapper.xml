@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.User2Mapper" >
+ 	<!-- 连表查询所有用户 -->
+ 	<resultMap type="com.bean.User2" id="selectAllUserresultMap">
+ 		<id column="id" property="id"/>
+ 		<result column="name" property="name"/>
+ 		<result column="sex" property="sex"/>
+ 		<result column="love" property="love"/>
+ 		<result column="uploadpath" property="uploadpath"/>
+ 		<association property="address2" javaType="com.bean.Address">
+ 			<id column="address_id" property="id"/>
+ 			<result column="city" property="city"/>
+ 		</association>
+ 	</resultMap>
+ 	<select id="selectAllUser" resultMap="selectAllUserresultMap" resultType="com.bean.User2">
+ 		SELECT a.id,a.`name`,a.sex,a.love,a.uploadpath,b.id address_id,b.city,b.myorderid from user2 a INNER JOIN address b on a.address=b.id 
+ 		<where>
+ 			<if test="name!=null and name!='%null%'">
+ 				a.name LIKE CONCAT('%',#{name},'%')
+ 			</if>
+ 		</where>
+ 	</select>
+ 	
+ 	
+ 	
+</mapper>

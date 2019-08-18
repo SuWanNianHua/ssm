@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>测试内容</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/party/css/basic.css">
+    <link rel="stylesheet" href="/party/layui/css/layui.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <script src="/party/layui/layui.js" charset="utf-8"></script>
+    <style type="text/css">
+        div ul li {
+            border-radius: 25px;
+        }
+
+        .layui-form-label {
+            width: 140px;
+        }
+    </style>
+</head>
+
+<body>
+	<p style="display: inline-block; color: deepskyblue; font-size: 24px;">主页</p>
+	<div style="display: inline-block;float: right;">
+	    <div class="layui-btn-group">
+	        <button class="layui-btn" id="addParty">新增</button>
+	    </div>
+	    <div class="" style="display: inline-block;">
+	        <div class="layui-input-inline" style="width: 200px;">
+	            <input type="text" name="price_min" placeholder="请输入要查询的党支部名称" autocomplete="off" class="layui-input">
+	        </div>
+	        	<button class="layui-btn">查询</button>
+	    </div>
+	 </div>
+	<table class="layui-hide" id="stuFirst" lay-filter="stuFirst"></table>
+</body>
+</html>
+
+    <form class="layui-from"  id="add_party" lay-filter="add_party" style="margin: 10 auto;text-align: center;display: none;margin: 10 auto" >
+        <div class="layui-form-item" style="margin-top:10px ">
+            <div class="layui-inline">
+                <label class="layui-form-label">管理员</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userName" id="userName" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">选举实到会人数</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="arriveNum" id="arriveNum" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">党组织名称</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="partyName" id="partyName" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">批准建立党组织日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="createDate" id="createDate" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">党组织代码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="partyId" id="partyId" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">开展评议日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="startMeetDate" id='startMeetDate' lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">党组织类别</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="partyType" id="partyType" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">结束评议日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="endMeetDate" id="endMeetDate" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">党组织属地关系</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="partyAddress" id="partyAddress" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">通信地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="address" id="address" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">领导班子当选日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="leaderDate" id="leaderDate" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">邮政编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zipCode" id="zipCode" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">本届届满日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="endDate" id="endDate" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">联系电话</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="phone" id="phone" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">选举方式</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="selectType" name="selectType" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">传真电话</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="faxNum" name="faxNum" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">选举应到会人数</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="supposeNum" id="supposeNum" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="numD" id="numD" lay-verify="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="addPwb">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+<script type="text/html" id="ipts">
+    <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+layui.use(['table', 'layer', 'jquery', 'element', 'laydate', 'form'], function () {
+    var table = layui.table;
+    var layer = layui.layer;
+    var $ = layui.jquery;
+    var element = layui.element;
+    var laydate = layui.laydate;
+    var form = layui.form;   
+//封装ajax        
+	function searchAll(){
+        $.ajax({
+      	  type:"GET",
+      	  url:'/party/partybranchcontroller/partybranch/allPartyBranch',
+      	  error:function(XMLHttpRequest, textStatus, errorThrown){
+      		  alert(XMLHttpRequest+'    '+textStatus+"    说明服务器返回失败");
+      	  },
+      	  dataType:"json",
+      	  success:function(data){
+      		  console.log(data);
+      		  showTable(data);	  
+      	  }
+        })}
+//调用ajax        
+searchAll();
+        $('#addParty').click(function () {
+            layer.open({
+                type:1,
+                title: '添加党组织',
+                area: '1000px',
+                content: $('#add_party'),
+            });
+        })
+        //监听提交
+        form.on('submit(addPwb)', function (data) {
+        	console.log(data);
+    	    $.ajax({
+    	    	type:"GET",
+    	    	dataType:"json",
+    	    	url:"/party/partybranchcontroller/partybranch/insertOnePartyBranch",
+    	    	data:{
+    	    		num:data.field.numD,	
+    	    		userName:data.field.userName,	
+    	    		partyId:data.field.partyId,	
+    	    		partyName:data.field.partyName,	
+    	    		partyType:data.field.partyType,	
+    	    		partyAddress:data.field.partyAddress,	
+    	    		leaderDate:data.field.leaderDate,	
+    	    		endDate:data.field.endDate,	
+    	    		selectType:data.field.selectType,	
+    	    		supposeNum:data.field.supposeNum,	
+    	    		arriveNum:data.field.arriveNum,	
+    	    		createDate:data.field.createDate,	
+    	    		startMeetDate:data.field.startMeetDate,	
+    	    		endMeetDate:data.field.endMeetDate,	
+    	    		address:data.field.address,	
+    	    		zipCode:data.field.zipCode,	
+    	    		phone:data.field.phone
+    	    	},
+    	    	error:function(){
+    	    		alert("error!");
+    	    	},
+    	    	success:function(data){
+    	    		console.log(data);
+    	    		if(data == true){
+    	    			layer.msg('添加成功!',{
+    	    				time:1000
+    	    			},function(){
+    	    				layer.closeAll();
+    	    			});
+    	    			searchAll();
+    	    			return false;
+    	    		}else if(data == false){
+    	    			layer.msg('添加失败!',{
+    	    				time:1000
+    	    			},function(){
+    	    				layer.closeAll();
+    	    			});
+    	    			searchAll();
+    	    			return false;
+    	    		}
+    	    	}	
+    	    })   
+            return false;
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#leaderDate' //指定元素
+        });
+
+        laydate.render({
+            elem: '#endDate' //指定元素
+        });
+
+        laydate.render({
+            elem: '#createDate' //指定元素
+        });
+        
+        laydate.render({
+            elem: '#startMeetDate' //指定元素
+        });
+
+         laydate.render({
+            elem: '#endMeetDate' //指定元素
+        });
+         
+        //展示已知数据
+        
+function showTable(data){
+	 table.render({
+         elem: '#stuFirst',
+         cols: [
+             [ //标题栏
+                 {
+                	 field: 'num',
+                     title: '编号',
+                     width: "5%",
+                 }, {
+                     field: 'partyName',
+                     title: '党组织名称',
+                     width: "15%",
+                     align: "center"
+
+                 }, {
+                     field: 'partyId',
+                     title: '党组织代码',
+                     width: "10%",
+                     align: "center"
+
+                 }, {
+                     field: 'partyType',
+                     title: '党组织类别',
+                     width: "8.5%",
+                     align: "center"
+                 }, {
+                     field: 'partyAddress',
+                     title: '党组织属地',
+                     width: "8.5%",
+                     align: "center"
+                 }, {
+                     field: 'leaderDate',
+                     title: '领导班子当选日期',
+                     width: "13%",
+                     align: "center"
+                 }, {
+                     field: 'endDate',
+                     title: '本届届满日期',
+                     width: "13%",
+                     align: "center"
+                 }, {
+                     field: 'createDate',
+                     title: '批准建立党组织日期',
+                     width: "13%",
+                     align: "center"
+                 }, {
+                     field: 'userName',
+                     title: '管理员',
+                     width: "9%",
+                     align: "center"
+                 }, {
+                     field: 'btn',
+                     title: '操作',
+                     width: "5%",
+                     align: "center",
+                     toolbar: "#ipts"
+                 }
+             ]
+         ],
+         page: false,
+         data: data,
+         even: true
+     }); 	      
+}    
+	table.on('tool(stuFirst)', function (obj) {
+	    var event = obj.event;
+	    var that = $(this);
+	    if (event === 'del') {
+	        layer.open({
+	            type:1,
+	            closeBtn: 0,
+	            title:"提示信息",
+	            content:"<span style='font-size:20px; margin-left:40px'>"+"真的要删除么？"+"</span>",
+	            area:['200px','150px'],
+	            offset: '10px',
+	            btn:['确定','取消'],
+	            btnAlign:'c',
+	            yes:function(index, layero){
+	          	  $.ajax({
+	            		type:"POST",
+	            		data:{
+	            			num:obj.data.num
+	            		},
+	            		url:"/party/partybranchcontroller/partybranch/batchDeletePartyBranch",
+	            		dataType:"json",
+	            		error:function(){
+	            			alert("error!");
+	            		},
+	            		success:function(data){
+	            			if(data == true){
+	            				layer.msg('删除成功!',{
+	            					time:1000
+	            				},function(){
+	            					layer.closeAll();
+	            				});
+	            				searchAll();
+	            				return false;
+	            			}else if(data == false){
+	            				layer.msg('删除失败!',{
+	            					time:1000
+	            				},function(){
+	            					layer.closeAll();
+	            				});
+	            				searchAll();
+	            				return false;
+	            			}
+	            		}	
+	            	})
+	            },
+	            btn2:function(index, layero){
+	                layer.close(index);
+	                return false;
+	            }
+	          })
+	    }
+	});  
+       
+});
+</script>

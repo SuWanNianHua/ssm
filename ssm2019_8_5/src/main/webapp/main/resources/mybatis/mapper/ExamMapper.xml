@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.party.mapper.ExamMapper">
+<resultMap type="com.henu.party.bean.Exam" id="resultMapExamMapper">
+<!--  
+//examId、examName、examList、create、tests
+//考试编号、考试名称、考试题目集、创建时间、党课测试表
+-->
+  	<id column="examId" property="examId"/>
+  	<result column="examName" property="examName"/>
+  	<result column="examList" property="examList"/>
+  	<result column="create" property="create"/>
+  	<collection property="test" ofType="com.henu.party.bean.Test">
+			<id column="id" property="tid"/>
+		  	<result column="userName" property="userName"/>
+		  	<result column="studySection" property="studySection"/>
+		  	<result column="grade" property="grade"/>
+		  	<result column="isStudy" property="isStudy"/>
+		  	<result column="examId" property="examId"/>
+	</collection>
+  	
+  	<!-- 
+  	<collection property="Test" javaType="com.henu.party.bean.Test">
+  			
+			<id column="id" property="id"/>
+		  	<result column="userName" property="userName"/>
+		  	<result column="studySection" property="studySection"/>
+		  	<result column="grade" property="grade"/>
+		  	<result column="isStudy" property="isStudy"/>
+		  	<result column="examId" property="examId"/>
+	</collection>
+	 -->
+  </resultMap>
+<!--  
+//examId、examName、examList、create、tests
+//考试编号、考试名称、考试题目集、创建时间、党课测试表
+-->
+  	<insert id="insertExam" parameterType="com.henu.party.bean.Exam"><!-- insert添加 -->
+ 	insert into tb_exam(examName,examList,create) 
+ 	values (#{examName},#{examList},#{create})
+ 	</insert>
+ 	<select id="selectAllExam" resultMap="resultMapExamMapper">
+		select * from tb_exam e LEFT JOIN tb_test t on e.examId = t.examId
+	</select>
+	<select id="selectByIdExam" resultType="com.henu.party.bean.Exam" parameterType="java.lang.Integer">
+		select * from tb_exam where id = #{id}
+	</select>
+	<select id="selectLike" parameterType="java.lang.String" resultMap="resultMapExamMapper" ><!-- selectByUsername查询 -->
+  	select * from tb_exam e LEFT JOIN tb_test t on e.examId = t.examId where 
+		e.examId like concat('%',#{Keywords},'%') or 
+  		examName like concat('%',#{Keywords},'%')
+  	<!--
+  	select * from tb_exam where 
+  	examId like concat('%',#{Keywords},'%') or 
+  	examName like concat('%',#{Keywords},'%')
+  	-->
+  	</select>
+	<delete id="batchDeleteByIdExam" parameterType="java.util.List">
+		delete from tb_exam where id in 
+		<foreach collection="ids" item="i" open="("  separator="," close=")" >
+			#{i}
+		</foreach>
+	</delete>
+	<!-- 分页 -->
+	<select id="searchRowExam" parameterType="java.lang.Integer" resultMap="resultMapExamMapper">
+		select * from tb_exam e LEFT JOIN tb_test t on e.examId = t.examId ORDER BY e.examId DESC LIMIT #{num1},#{num2}
+		<!-- SELECT * from tb_exam ORDER BY examId DESC LIMIT #{num1},#{num2}--> 
+	</select>
+	<select id="numberExam"  resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM tb_exam
+	</select>
+</mapper>
